@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="TSManager.UserControlCompany"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NavigationDrawerPopUpMenu2"
+            xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
+             mc:Ignorable="d"
+             >
+    <Grid Margin="10" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="160"/>
+            <ColumnDefinition Width="463*"/>
+        </Grid.ColumnDefinitions>
+
+        <ListBox x:Name="Listbox" Margin="10" Grid.Column="1" MouseDoubleClick="ListBox_MouseDoubleClick"   >
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel Orientation="Vertical" CanHorizontallyScroll="False"
+                                    CanVerticallyScroll="True"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Height="200" Source="{Binding Bitmap}" VerticalAlignment="Top" />
+                        <WrapPanel Orientation="Vertical" Margin="10" >
+                            <TextBlock Text="{Binding FileName}" Margin="10" TextWrapping="Wrap" />
+                            <TextBlock Text="{Binding TvSeries}" Margin="10" TextWrapping="Wrap" />
+                            <TextBlock Text="{Binding TvSeriesInfo[0]}" Margin="10" TextWrapping="Wrap" />
+                            <TextBlock Text="{Binding Company}" Margin="10" TextWrapping="Wrap" />
+                        </WrapPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <ListBox x:Name="Mode" Margin="10"
+              Style="{StaticResource MaterialDesignToolToggleListBox}"
+              SelectedIndex="0" SelectionChanged="Mode_SelectionChanged">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ToolTip>
+                <StackPanel>
+                    <TextBlock Text="絞り込むジャンルを選択してください" />
+                </StackPanel>
+            </ListBox.ToolTip>
+        </ListBox>
+    </Grid>
+</UserControl>

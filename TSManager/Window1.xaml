@@ -1,0 +1,21 @@
+﻿<Window x:Class="TSManager.Window1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TSManager"
+        mc:Ignorable="d"
+        Title="Window1" Height="450" Width="292.647">
+    <Grid>
+        <StackPanel Orientation="Horizontal" Margin="0,0,10,0">
+                <Image Height="409" Source="{Binding Bitmap}" VerticalAlignment="Top" Margin="0,0,10,0" />
+                <StackPanel Orientation="Vertical" Margin="14.176,0,10,0" Grid.Column="1">
+                    <TextBlock Text="aaaaaaaaaaaaaaaaaa" Margin="10" TextWrapping="Wrap" />
+                    <TextBlock Text="aaaaaaaaaaaaa" Margin="10" TextWrapping="Wrap" />
+                    <TextBlock Text="aaaaaaaaaaaa" Margin="10" TextWrapping="Wrap" />
+                    <TextBlock Text="aaaaaaaaaaaaaaaaaaaaa" Margin="10" TextWrapping="Wrap" />
+                </StackPanel>
+        </StackPanel>
+
+    </Grid>
+</Window>
