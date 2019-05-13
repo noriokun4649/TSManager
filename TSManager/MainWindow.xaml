@@ -80,6 +80,12 @@
                                     <TextBlock Text="シリーズ別" VerticalAlignment="Center" Margin="20 10"/>
                                 </StackPanel>
                             </ListViewItem>
+                            <ListViewItem x:Name="ItemDay" Height="60">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="CalendarDay" Height="25" Width="25" Margin="10"/>
+                                    <TextBlock Text="日付別" VerticalAlignment="Center" Margin="20 10"/>
+                                </StackPanel>
+                            </ListViewItem>
                             <ListViewItem x:Name="ItemCompany" Height="60">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="RadioTower" Height="25" Width="25" Margin="10"/>
