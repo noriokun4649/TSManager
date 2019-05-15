@@ -34,7 +34,7 @@ namespace TSManager
             if (item is Files)
             {
                 var file = (Files)item;
-                Util.OpenFile(file.FilePath);
+                Util.OpenFile(file.FilePath,file.FileName);
             }
         }
     }

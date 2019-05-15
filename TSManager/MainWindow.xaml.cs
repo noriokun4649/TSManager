@@ -28,6 +28,11 @@ namespace TSManager
         {
             InitializeComponent();
             TopBar.MouseLeftButtonDown += (o, e) => DragMove();
+            if (!File.Exists(Util.GetCurrentAppDir() + @"\history.txt"))
+            {
+                using (File.Create(Util.GetCurrentAppDir() + @"\history.txt")) { } 
+            }
+            LoadTxtFile();
             LoadTs();
         }
 
@@ -63,6 +68,11 @@ namespace TSManager
                     GridMain.Children.Add(usc);
                     Top.Text = "番組の再生履歴";
                     break;
+                case "ItemDay":
+                    usc = new UserControlDay();
+                    GridMain.Children.Add(usc);
+                    Top.Text = "日付別";
+                    break;
                 default:
                     break;
             }
@@ -84,6 +94,28 @@ namespace TSManager
         {
             LoadTs();
         }
+
+        private List<string> LoadTxtFile()
+        {
+            List<string> list = new List<string>();
+            try
+            {
+                using (var file = new StreamReader(Util.GetCurrentAppDir() + @"\history.txt"))
+                {
+                    while (!file.EndOfStream)
+                    {
+                        list.Add(file.ReadLine());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("エラーが発生しました。このエラーについての詳細は以下を参照してください。\n\n:" + ex.Message);
+            }
+
+            return list;
+        }
+
         private void LoadTs()
         {
             BindingOperations.EnableCollectionSynchronization(Util.Data, new object());
@@ -151,6 +183,11 @@ namespace TSManager
                     MessageBox.Show("ファイルを開く際にIOエラーが発生しました。\n\nIOエラー詳細：" + ex.Message);
                 }
             });
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
         }
     }
 }

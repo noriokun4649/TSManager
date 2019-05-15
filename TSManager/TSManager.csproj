@@ -116,6 +116,9 @@
     <Compile Include="Setting.xaml.cs">
       <DependentUpon>Setting.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControlDay.xaml.cs">
+      <DependentUpon>UserControlDay.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControlCompany.xaml.cs">
       <DependentUpon>UserControlCompany.xaml</DependentUpon>
     </Compile>
@@ -147,6 +150,10 @@
     <Page Include="Setting.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControlDay.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControlCompany.xaml">
       <Generator>MSBuild:Compile</Generator>

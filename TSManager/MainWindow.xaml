@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" mc:Ignorable="d" Height="600" Width="1080" Foreground="White" WindowStartupLocation="CenterScreen">
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" mc:Ignorable="d" Height="600" Width="1080" Foreground="White" WindowStartupLocation="CenterScreen" Closing="Window_Closing">
 
     <Grid  Background="#f5f5f5">
         <materialDesign:DialogHost x:Name="Diag">
@@ -15,7 +15,6 @@
                 </StackPanel>
             </materialDesign:DialogHost.DialogContent>
             <Grid>
-
                 <Grid x:Name="GridMain" Margin="200,60,0,0" />
                 <Grid x:Name="TopBar" Height="60" VerticalAlignment="Top" Background="#FF5C99D6">
                     <Grid.Effect>

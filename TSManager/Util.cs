@@ -20,6 +20,7 @@ namespace TSManager
         public static string[] genres = {
             "ニュース／速報","スポーツ","情報／ワイドショー","ドラマ","音楽","バラエティ","映画","アニメ／特撮","ドキュメンタリー／教養","劇場／公演","趣味／教育","福祉","その他","なし"
         };
+        public static ObservableCollection<PlayData> time = new ObservableCollection<PlayData>();
         
         public static Bitmap ReadMovieInfo(string moviePath)
         {
@@ -61,7 +62,12 @@ namespace TSManager
             bitmap.Dispose();
             return bitmapSource;
         }
-        public static void OpenFile(string path)
+        public static string GetCurrentAppDir()
+        {
+            return System.IO.Path.GetDirectoryName(
+                System.Reflection.Assembly.GetExecutingAssembly().Location);
+        }
+        public static void OpenFile(string path,string filename)
         {
             System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo();
             psi.FileName = Properties.Settings.Default.TVTestPath;
@@ -69,6 +75,8 @@ namespace TSManager
             try
             {
                 System.Diagnostics.Process.Start(psi);
+                DateTime now_time = DateTime.Now;
+                time.Add(new PlayData(filename, now_time));
             }
             catch (InvalidOperationException ex)
             {
@@ -80,6 +88,25 @@ namespace TSManager
             }
         }
     }
+
+    //StringFormat=yyyy年MM月dd日
+    public sealed class PlayData
+    {
+        public PlayData(string filename, DateTime lastplaytime)
+        {
+            LastPlayTime = lastplaytime.ToLongDateString();
+            FileName = filename;
+        }
+        public PlayData(string filename, string lastplaytime)
+        {
+            LastPlayTime = lastplaytime;
+            FileName = filename;
+        }
+
+        public string FileName { get; set; }
+        public string LastPlayTime { get; set; }
+    }
+
     public sealed class Files
     {
         public Files(string filename, string filepath, string tvSeries, string company, List<string> sirizeinfo,

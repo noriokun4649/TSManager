@@ -1,5 +1,6 @@
 ﻿
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -7,29 +8,28 @@ using System.Windows.Controls;
 
 namespace TSManager
 {
-    public partial class UserControlProgram : UserControl
+    public partial class UserControlDay : UserControl
     {
-        IEnumerable<string> program;
-
-        public UserControlProgram()
+        IEnumerable<string> company;
+        public UserControlDay()
         {
             InitializeComponent();
-            program = Util.Data.Select(files => files.TvSeries).Distinct();
-            Mode.ItemsSource = program;
-            Listbox.ItemsSource = Util.Data.Where(files => files.TvSeries.Equals(program.ElementAt(0))).OrderBy(data => data.TvSeries).ThenBy(data => data.Epinum);
+            company = Util.Data.Select(files => files.StartTime.ToLongDateString()).Distinct();
+            Mode.ItemsSource = company;
+            Listbox.ItemsSource = Util.Data.Where(files => files.StartTime.ToLongDateString().Equals(company.ElementAt(0))).OrderBy(data => data.TvSeries).ThenBy(data => data.Epinum);
         }
 
         private void Mode_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
-                Listbox.ItemsSource = Util.Data.Where(files => files.TvSeries.Equals(program.ElementAt(Mode.SelectedIndex))).OrderBy(data => data.TvSeries).ThenBy(data => data.Epinum);
+                Listbox.ItemsSource = Util.Data.Where(files => files.StartTime.ToLongDateString().Equals(company.ElementAt(Mode.SelectedIndex))).OrderBy(data => data.TvSeries).ThenBy(data => data.Epinum);
             }
             catch
             {
 
             }
-            
+
         }
         private void ListBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
