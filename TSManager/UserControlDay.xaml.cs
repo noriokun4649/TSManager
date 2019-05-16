@@ -14,7 +14,7 @@ namespace TSManager
         public UserControlDay()
         {
             InitializeComponent();
-            company = Util.Data.Select(files => files.StartTime.ToLongDateString()).Distinct();
+            company = Util.Data.Select(files => files.StartTime.ToString("yyyy年MM月dd日(dddd)")).OrderByDescending(data => data).Distinct();
             Mode.ItemsSource = company;
             Listbox.ItemsSource = Util.Data.Where(files => files.StartTime.ToLongDateString().Equals(company.ElementAt(0))).OrderBy(data => data.TvSeries).ThenBy(data => data.Epinum);
         }
@@ -23,7 +23,7 @@ namespace TSManager
         {
             try
             {
-                Listbox.ItemsSource = Util.Data.Where(files => files.StartTime.ToLongDateString().Equals(company.ElementAt(Mode.SelectedIndex))).OrderBy(data => data.TvSeries).ThenBy(data => data.Epinum);
+                Listbox.ItemsSource = Util.Data.Where(files => files.StartTime.ToString("yyyy年MM月dd日(dddd)").Equals(company.ElementAt(Mode.SelectedIndex))).OrderBy(data => data.TvSeries).ThenBy(data => data.Epinum);
             }
             catch
             {

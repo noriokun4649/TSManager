@@ -94,7 +94,7 @@ namespace TSManager
     {
         public PlayData(string filename, DateTime lastplaytime)
         {
-            LastPlayTime = lastplaytime.ToLongDateString();
+            LastPlayTime = lastplaytime.ToString("yyyy年MM月dd日(dddd)");
             FileName = filename;
         }
         public PlayData(string filename, string lastplaytime)

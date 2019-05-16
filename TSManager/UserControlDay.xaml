@@ -10,7 +10,7 @@
              >
     <Grid Margin="10" >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="160"/>
+            <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="463*"/>
         </Grid.ColumnDefinitions>
 
@@ -35,7 +35,8 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <ListBox x:Name="Mode" Margin="10"
+        <ScrollViewer>
+            <ListBox x:Name="Mode" Margin="10"
               Style="{StaticResource MaterialDesignToolToggleListBox}"
               SelectedIndex="0" SelectionChanged="Mode_SelectionChanged">
             <ListBox.ItemsPanel>
@@ -49,5 +50,6 @@
                 </StackPanel>
             </ListBox.ToolTip>
         </ListBox>
+        </ScrollViewer>
     </Grid>
 </UserControl>
