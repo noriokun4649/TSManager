@@ -1,13 +1,10 @@
-﻿using OpenCvSharp;
-using OpenCvSharp.Extensions;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -21,7 +18,7 @@ namespace TSManager
             "ニュース／速報","スポーツ","情報／ワイドショー","ドラマ","音楽","バラエティ","映画","アニメ／特撮","ドキュメンタリー／教養","劇場／公演","趣味／教育","福祉","その他","なし"
         };
         public static ObservableCollection<PlayData> time = new ObservableCollection<PlayData>();
-        
+        /*
         public static Bitmap ReadMovieInfo(string moviePath)
         {
             var movie = new MovieInfo(moviePath);
@@ -46,6 +43,9 @@ namespace TSManager
             }
             return null;
         }
+        */
+
+
         public static BitmapSource Convert(Bitmap bitmap)
         {
             var bitmapData = bitmap.LockBits(
@@ -55,12 +55,35 @@ namespace TSManager
             var bitmapSource = BitmapSource.Create(
                 bitmapData.Width, bitmapData.Height,
                 bitmap.HorizontalResolution, bitmap.VerticalResolution,
-                PixelFormats.Bgr24, null,
+                PixelFormats.Bgr32, null,
                 bitmapData.Scan0, bitmapData.Stride * bitmapData.Height, bitmapData.Stride);
-
+            //PixelFormats.Bgr32はOpenCVならPixelFormats.Bgr24つかう
             bitmap.UnlockBits(bitmapData);
             bitmap.Dispose();
             return bitmapSource;
+        }
+               
+        static readonly string FfmpegPath = @"C:\Users\norio\ffmpeg.exe";
+        /// <summary>動画ファイルからパイプを用いて画像を抽出する</summary>
+        public static Bitmap ReadMovieInfoFfmpeg(string inputMoviePath)
+        {
+            var arguments = $"-ss 9 -i \"{inputMoviePath}\" -vf bwdif=0:-1:1 -vf scale=680:383 -vframes 1  -f image2 pipe:1";
+
+            using (var process = new Process())
+            {
+                process.StartInfo = new ProcessStartInfo
+                {
+                    FileName = FfmpegPath,
+                    Arguments = arguments,
+                    CreateNoWindow = true,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                };
+                process.Start();
+                var image = Image.FromStream(process.StandardOutput.BaseStream);
+                process.WaitForExit();
+                return new Bitmap(image);
+            }
         }
         public static string GetCurrentAppDir()
         {
@@ -142,6 +165,7 @@ namespace TSManager
         public BitmapSource Bitmap { get; set; }
         public int Epinum { get; set; }
     }
+    /*
     public class MovieInfo
     {
         public string Path { get; }
@@ -155,5 +179,5 @@ namespace TSManager
         {
             Path = path;
         }
-    }
+    }*/
 }
