@@ -121,7 +121,7 @@ namespace TSManager
                     {
                         try
                         {
-                            var bitmap = Util.ReadMovieInfo(str);
+                            var bitmap = Util.ReadMovieInfoFfmpeg(str);//FFmpeg使うように。インターレース解除も
                             if (bitmap == null) throw new NullReferenceException();
                             var image = Util.Convert(bitmap);
                             image.Freeze();
