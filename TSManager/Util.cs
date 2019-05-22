@@ -88,7 +88,7 @@ namespace TSManager
                     process.WaitForExit();
                     return new Bitmap(image);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     Assembly myAssembly = Assembly.GetExecutingAssembly();
                     return new Bitmap(myAssembly.GetManifestResourceStream("TSManager.icon.png"));
