@@ -115,6 +115,7 @@ namespace TSManager
                 {
 
                     Util.Data.Clear();
+                    GC.Collect();
                     var folder = Properties.Settings.Default.SaveFolder;
                     IEnumerable<string> files = Directory.EnumerateFiles(@folder, "*.ts");
                     foreach (string str in files)
@@ -127,7 +128,7 @@ namespace TSManager
                             image.Freeze();
                             var program = new ReadTxtFile(str + ".program.txt");
                             Util.Data.Add(new Files(program.Title, str, program.Series, program.Company, program.SeriesInfo,
-                                program.GenreIndex, program.Genre, program.Length, program.Starttime, program.Endtime, DateTime.Now, image, program.Epinum));
+                                program.GenreIndex, program.Genre, program.Length, program.Starttime, program.Endtime, DateTime.Now, image, program.Epinum));                           
                         }
                         catch (IndexOutOfRangeException)
                         {
