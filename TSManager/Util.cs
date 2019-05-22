@@ -5,9 +5,12 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using TSManager.Properties;
 
 namespace TSManager
 {
@@ -55,49 +58,56 @@ namespace TSManager
             var bitmapSource = BitmapSource.Create(
                 bitmapData.Width, bitmapData.Height,
                 bitmap.HorizontalResolution, bitmap.VerticalResolution,
-                PixelFormats.Bgr32, null,
+                PixelFormats.Bgra32, null,
                 bitmapData.Scan0, bitmapData.Stride * bitmapData.Height, bitmapData.Stride);
             //PixelFormats.Bgr32はOpenCVならPixelFormats.Bgr24つかう
             bitmap.UnlockBits(bitmapData);
             bitmap.Dispose();
+            bitmapSource.Freeze();
             return bitmapSource;
         }
-               
-        static readonly string FfmpegPath = @"C:\Users\norio\ffmpeg.exe";
         /// <summary>動画ファイルからパイプを用いて画像を抽出する</summary>
-        public static Bitmap ReadMovieInfoFfmpeg(string inputMoviePath)
+        public static Bitmap ReadMovieInfoFfmpeg(string inputMoviePath)//680:383
         {
-            var arguments = $"-ss 9 -i \"{inputMoviePath}\" -vf bwdif=0:-1:1 -vf scale=680:383 -vframes 1  -f image2 pipe:1";
-
+            var arguments = $"-ss 10 -i \"{inputMoviePath}\" -filter_complex \"dejudder,fps=30000/1001,fieldmatch,yadif=0:-1:1,decimate,fps=24000/1001,scale=680:383\" -vframes 1  -f image2 pipe:1";
+            //ここでFFmpeg利用。逆テレシネでFPSによるブレと、インターレースによる横線を取り除いてサムネイルを取得。680　383
             using (var process = new Process())
             {
-                process.StartInfo = new ProcessStartInfo
+                try
                 {
-                    FileName = FfmpegPath,
-                    Arguments = arguments,
-                    CreateNoWindow = true,
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true,
-                };
-                process.Start();
-                var image = Image.FromStream(process.StandardOutput.BaseStream);
-                process.WaitForExit();
-                return new Bitmap(image);
+                    process.StartInfo = new ProcessStartInfo
+                    {
+                        FileName = Settings.Default.FfmpegPath,
+                        Arguments = arguments,
+                        CreateNoWindow = true,
+                        UseShellExecute = false,
+                        RedirectStandardOutput = true,
+                    };
+                    process.Start();
+                    var image = Image.FromStream(process.StandardOutput.BaseStream);
+                    process.WaitForExit();
+                    return new Bitmap(image);
+                }
+                catch (Exception ex)
+                {
+                    Assembly myAssembly = Assembly.GetExecutingAssembly();
+                    return new Bitmap(myAssembly.GetManifestResourceStream("TSManager.icon.png"));
+                }
             }
         }
         public static string GetCurrentAppDir()
         {
-            return System.IO.Path.GetDirectoryName(
-                System.Reflection.Assembly.GetExecutingAssembly().Location);
+            return Path.GetDirectoryName(
+                Assembly.GetExecutingAssembly().Location);
         }
         public static void OpenFile(string path,string filename)
         {
-            System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo();
-            psi.FileName = Properties.Settings.Default.TVTestPath;
-            psi.Arguments = Properties.Settings.Default.TVTPlayBondriver + " " + Properties.Settings.Default.Com + @" """ + path + @"""";
+            ProcessStartInfo psi = new ProcessStartInfo();
+            psi.FileName = Settings.Default.TVTestPath;
+            psi.Arguments = Settings.Default.TVTPlayBondriver + " " + Settings.Default.Com + @" """ + path + @"""";
             try
             {
-                System.Diagnostics.Process.Start(psi);
+                Process.Start(psi);
                 DateTime now_time = DateTime.Now;
                 time.Add(new PlayData(filename, now_time));
             }
