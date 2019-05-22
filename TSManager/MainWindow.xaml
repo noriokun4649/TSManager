@@ -3,15 +3,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" mc:Ignorable="d" Height="600" Width="1080" Foreground="White" WindowStartupLocation="CenterScreen" Closing="Window_Closing" Title="TS Manager">
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" mc:Ignorable="d" Height="600" Width="1080" Foreground="White" WindowStartupLocation="CenterScreen" Closing="Window_Closing" Title="TS Manager" MinWidth="1080" MinHeight="600">
 
     <Grid  Background="#f5f5f5">
         <materialDesign:DialogHost x:Name="Diag">
             <materialDesign:DialogHost.DialogContent>
                 <StackPanel Margin="16">
                     <TextBlock>TSファイル一覧をスキャンして読み込み中です</TextBlock>
-                    <ProgressBar Style="{DynamicResource MaterialDesignCircularProgressBar}" HorizontalAlignment="Center" Height="20" Margin="16" IsIndeterminate="True" Value="0" />
-                    <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"></Button>
+                    <TextBlock x:Name="now" Text=""/>
+                    <ProgressBar x:Name="progressDiag" Height="15" Margin="10" RenderTransformOrigin="0.497,-0.833" Grid.Row="1"/>
+                    <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Content="ダイアログを隠す"/>
                 </StackPanel>
             </materialDesign:DialogHost.DialogContent>
             <Grid>
@@ -31,7 +32,7 @@
                                     </StackPanel>
                                 </Button>
                                 <Button Click="Button_Click_2" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
                                         <materialDesign:PackIcon Kind="Reload" VerticalAlignment="Center" Height="25" Width="25"/>
                                         <TextBlock VerticalAlignment="Center" Margin="10,0,0,0">TSスキャン</TextBlock>
                                     </StackPanel>
@@ -58,7 +59,15 @@
                     </Grid.Effect>
                     <StackPanel>
                         <Grid Height="150" Background="White" RenderTransformOrigin="0.5,0.5">
-                            
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <ProgressBar x:Name="progress" Height="15" Margin="10" RenderTransformOrigin="0.497,-0.833" Grid.Row="1"/>
+                            <Label x:Name="loadingText" Content="TS読み込み状況：" Margin="10"/>
+                            <Button x:Name="CancelButton" Content="キャンセル" Margin="10" Grid.Row="2" RenderTransformOrigin="0.787,0.85" Click="Button_Click_3"/>
+
                         </Grid>
                         <ListView x:Name="ListViewMenu" Foreground="#FF5C99D6" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="ListViewMenu_SelectionChanged">
                             <ListViewItem x:Name="ItemHome" Height="60">

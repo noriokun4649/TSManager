@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Security;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,6 +16,7 @@ namespace TSManager
     /// </summary>
     public partial class MainWindow : Window
     {
+        private CancellationTokenSource tokenSource = null;
         public MainWindow()
         {
             InitializeComponent();
@@ -23,7 +26,8 @@ namespace TSManager
                 using (File.Create(Util.GetCurrentAppDir() + @"\history.txt")) { } 
             }
             LoadTxtFile();
-            LoadTs();
+            tokenSource = new CancellationTokenSource();
+            LoadTs(tokenSource.Token);
         }
 
 
@@ -82,7 +86,9 @@ namespace TSManager
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            LoadTs();
+            tokenSource.Cancel();
+            tokenSource = new CancellationTokenSource();
+            LoadTs(tokenSource.Token);
         }
 
         private List<string> LoadTxtFile()
@@ -106,20 +112,27 @@ namespace TSManager
             return list;
         }
 
-        private void LoadTs()
+        private void LoadTs(CancellationToken token)
         {
             BindingOperations.EnableCollectionSynchronization(Util.Data, new object());
             var task = Task.Factory.StartNew(() =>
             {
                 try
                 {
-
                     Util.Data.Clear();
                     GC.Collect();
                     var folder = Properties.Settings.Default.SaveFolder;
                     IEnumerable<string> files = Directory.EnumerateFiles(@folder, "*.ts");
+                    var totalCount = files.Count();
+                    var nowCount = 0;
+                    Dispatcher.Invoke(() =>
+                    {
+                        progressDiag.Maximum = totalCount;
+                        progress.Maximum = totalCount;
+                    });
                     foreach (string str in files)
                     {
+                        token.ThrowIfCancellationRequested();
                         try
                         {
                             var bitmap = Util.ReadMovieInfoFfmpeg(str);//FFmpeg使うように。インターレース解除も
@@ -128,7 +141,15 @@ namespace TSManager
                             image.Freeze();
                             var program = new ReadTxtFile(str + ".program.txt");
                             Util.Data.Add(new Files(program.Title, str, program.Series, program.Company, program.SeriesInfo,
-                                program.GenreIndex, program.Genre, program.Length, program.Starttime, program.Endtime, DateTime.Now, image, program.Epinum));                           
+                                program.GenreIndex, program.Genre, program.Length, program.Starttime, program.Endtime, DateTime.Now, image, program.Epinum));
+                            nowCount++;
+                            Dispatcher.Invoke(() =>
+                            {
+                                progressDiag.Value = nowCount;
+                                progress.Value = nowCount;
+                                now.Text = totalCount + "件中" + nowCount + "件完了";
+                                loadingText.Content = "TSファラオ読み込み状況：\n" + totalCount + "件中" + nowCount + "件完了";
+                            });
                         }
                         catch (IndexOutOfRangeException)
                         {
@@ -173,12 +194,22 @@ namespace TSManager
                 {
                     MessageBox.Show("ファイルを開く際にIOエラーが発生しました。\n\nIOエラー詳細：" + ex.Message);
                 }
+                Dispatcher.Invoke(() =>
+                {
+                    CancelButton.IsEnabled = true;
+                    Diag.IsOpen = false;
+                });
             });
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
 
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            tokenSource.Cancel();
         }
     }
 }
