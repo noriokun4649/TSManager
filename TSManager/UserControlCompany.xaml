@@ -14,26 +14,35 @@
             <ColumnDefinition Width="463*"/>
         </Grid.ColumnDefinitions>
 
-        <ListBox x:Name="Listbox" Margin="10" Grid.Column="1" MouseDoubleClick="ListBox_MouseDoubleClick"   >
-            <ListBox.ItemsPanel>
+        <ListBox x:Name="Listbox"
+                 Grid.Column="2"
+            Margin="10"
+            Padding="10"
+            Background="Transparent"
+            MouseDoubleClick="ListBox_MouseDoubleClick"
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <VirtualizingStackPanel Orientation="Vertical" CanHorizontallyScroll="False"
-                                    CanVerticallyScroll="True"/>
+                    <WrapPanel  Margin="5"  Orientation="Horizontal" IsItemsHost="True"/>
                 </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
-            <ListBox.ItemTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
+                    <Grid Margin="5" VerticalAlignment="Top" Width="700" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
                         <Image Height="200" Source="{Binding Bitmap}" VerticalAlignment="Top" />
-                        <WrapPanel Orientation="Vertical" Margin="10" >
+                        <StackPanel Orientation="Vertical" Margin="10" Grid.Column="1">
                             <TextBlock Text="{Binding FileName}" Margin="10" TextWrapping="Wrap" />
                             <TextBlock Text="{Binding TvSeries}" Margin="10" TextWrapping="Wrap" />
                             <TextBlock Text="{Binding TvSeriesInfo[0]}" Margin="10" TextWrapping="Wrap" />
                             <TextBlock Text="{Binding Company}" Margin="10" TextWrapping="Wrap" />
-                        </WrapPanel>
-                    </StackPanel>
+                        </StackPanel>
+                    </Grid>
                 </DataTemplate>
-            </ListBox.ItemTemplate>
+            </ItemsControl.ItemTemplate>
         </ListBox>
         <ListBox x:Name="Mode" Margin="10"
               Style="{StaticResource MaterialDesignToolToggleListBox}"
