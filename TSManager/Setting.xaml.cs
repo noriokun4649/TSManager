@@ -1,4 +1,5 @@
-﻿using Microsoft.WindowsAPICodePack.Dialogs;
+﻿using Microsoft.Win32;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,7 @@ namespace TSManager
             TVTPlayBondriver.Text=Properties.Settings.Default.TVTPlayBondriver ;
             Com.Text = Properties.Settings.Default.Com;
             SaveFolder.Text = Properties.Settings.Default.SaveFolder;
+            FfmpegPath.Text = Properties.Settings.Default.FfmpegPath;
         }
 
         private void Button_Click_Ok(object sender, RoutedEventArgs e)
@@ -35,6 +37,7 @@ namespace TSManager
             Properties.Settings.Default.TVTPlayBondriver = TVTPlayBondriver.Text;
             Properties.Settings.Default.Com = Com.Text;
             Properties.Settings.Default.SaveFolder = SaveFolder.Text;
+            Properties.Settings.Default.FfmpegPath = FfmpegPath.Text;
             Properties.Settings.Default.Save();
             Close();
         }
@@ -46,8 +49,8 @@ namespace TSManager
 
         private void Button_Click_File_Open(object sender, RoutedEventArgs e)
         {
-            // ダイアログのインスタンスを生成
             var dialog = new CommonOpenFileDialog();
+            dialog.Title = "実行ファイルパス(TvTest、MPCやVLCなどの動画プレイヤーのパス)を取得する";
             dialog.Filters.Add(new CommonFileDialogFilter("実行ファイル", "*.exe")); 
             dialog.Filters.Add(new CommonFileDialogFilter("すべてのファイル", "*.*"));
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
@@ -55,7 +58,18 @@ namespace TSManager
                 this.TVTestPath.Text = dialog.FileName;
             }
         }
-
+        private void Button_Click_Ffmpeg_Open(object sender, RoutedEventArgs e)
+        {
+            var dialog = new CommonOpenFileDialog();
+            dialog.Filters.Add(new CommonFileDialogFilter("実行ファイル", "*.exe"));
+            dialog.Filters.Add(new CommonFileDialogFilter("すべてのファイル", "*.*"));
+            dialog.Title = "FFmpegのパスを取得する";
+            dialog.DefaultFileName = "ffmpeg.exe";
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                this.FfmpegPath.Text = dialog.FileName;
+            }
+        }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
@@ -64,6 +78,7 @@ namespace TSManager
         private void Button_Click_Folder_Open(object sender, RoutedEventArgs e)
         {
             var dialog = new CommonOpenFileDialog();
+            dialog.Title = "録画保存フォルダを取得する";
             dialog.IsFolderPicker = true;
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {

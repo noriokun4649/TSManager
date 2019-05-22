@@ -70,5 +70,17 @@ namespace TSManager.Properties {
                 this["SaveFolder"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string FfmpegPath {
+            get {
+                return ((string)(this["FfmpegPath"]));
+            }
+            set {
+                this["FfmpegPath"] = value;
+            }
+        }
     }
 }

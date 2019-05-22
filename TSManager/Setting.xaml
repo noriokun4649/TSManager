@@ -13,7 +13,8 @@
             <RowDefinition Height="70"/>
             <RowDefinition Height="70"/>
             <RowDefinition Height="70"/>
-            <RowDefinition Height="159*"/>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="78*"/>
         </Grid.RowDefinitions>
 
         <Button
@@ -24,8 +25,8 @@
             Height="24"
             Width="24" />
         </Button>
-        <Button Content="OK" Margin="0,0,160,10" Height="32" HorizontalAlignment="Right" Width="93" Click="Button_Click_Ok" VerticalAlignment="Bottom" Grid.Row="5"/>
-        <Button Content="キャンセル" Margin="0,0,32,10" Height="32" RenderTransformOrigin="-0.921,0.559" Click="Button_Click_Cancel" HorizontalAlignment="Right" Width="93" VerticalAlignment="Bottom" Grid.Row="5"/>
+        <Button Content="OK" Margin="0,0,160,10" Height="32" HorizontalAlignment="Right" Width="93" Click="Button_Click_Ok" VerticalAlignment="Bottom" Grid.Row="6"/>
+        <Button Content="キャンセル" Margin="0,0,32,10" Height="32" RenderTransformOrigin="-0.921,0.559" Click="Button_Click_Cancel" HorizontalAlignment="Right" Width="93" VerticalAlignment="Bottom" Grid.Row="6"/>
         <TextBox x:Name="TVTestPath" materialDesign:HintAssist.Hint="実行ファイルパス(TvTest、MPCやVLCなどの動画プレイヤーのパス)"
             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="45,10,79,10" TextWrapping="Wrap" Padding="0" VerticalContentAlignment="Stretch" Grid.Row="1"/>
         <TextBox x:Name="TVTPlayBondriver" materialDesign:HintAssist.Hint="TVTPlay用BonDriver指定(例：/d BonDriver_Pipe.dll)"
@@ -42,7 +43,16 @@
                 Height="24"
                 Width="24" />
         </Button>
-
+        <TextBox x:Name="FfmpegPath" materialDesign:HintAssist.Hint="FFmpeg.exeのパス"
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="45,10,79,10" TextWrapping="Wrap" VerticalContentAlignment="Stretch" Grid.Row="5"/>
+        <Button
+            Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+            ToolTip="開く" Margin="0,0,21,13" Width="40" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Button_Click_Ffmpeg_Open" Grid.Row="5">
+            <materialDesign:PackIcon
+            Kind="File"
+            Height="24"
+            Width="24" />
+        </Button>
 
     </Grid>
 </Window>
