@@ -13,5 +13,14 @@ namespace NavigationDrawerPopUpMenu2
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            var font = new System.Windows.Media.FontFamily("Yu Gothic UI");
+
+            var style = new Style(typeof(Window));
+            style.Setters.Add(new Setter(Window.FontFamilyProperty, font));
+
+            FrameworkElement.StyleProperty.OverrideMetadata(typeof(Window), new FrameworkPropertyMetadata(style));
+        }
     }
 }
