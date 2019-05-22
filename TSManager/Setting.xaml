@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Setting" Height="505.027" Width="518.749" WindowStartupLocation="CenterOwner">
+        Title="Setting" Height="505" Width="520" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="37*"/>
@@ -19,14 +19,14 @@
 
         <Button
             Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
-            ToolTip="開く" Margin="0,0,21,13" Width="40" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Button_Click_File_Open" Grid.Row="1">
+            ToolTip="開く" Margin="0,0,20,13" Width="40" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Button_Click_File_Open" Grid.Row="1">
             <materialDesign:PackIcon
             Kind="File"
             Height="24"
             Width="24" />
         </Button>
-        <Button Content="OK" Margin="0,0,160,10" Height="32" HorizontalAlignment="Right" Width="93" Click="Button_Click_Ok" VerticalAlignment="Bottom" Grid.Row="6"/>
-        <Button Content="キャンセル" Margin="0,0,32,10" Height="32" RenderTransformOrigin="-0.921,0.559" Click="Button_Click_Cancel" HorizontalAlignment="Right" Width="93" VerticalAlignment="Bottom" Grid.Row="6"/>
+        <Button Content="OK" Margin="0,0,160,20" Height="32" HorizontalAlignment="Right" Width="93" Click="Button_Click_Ok" VerticalAlignment="Bottom" Grid.Row="6"/>
+        <Button Content="キャンセル" Margin="0,0,32,20" Height="32" RenderTransformOrigin="-0.921,0.559" Click="Button_Click_Cancel" HorizontalAlignment="Right" Width="93" VerticalAlignment="Bottom" Grid.Row="6"/>
         <TextBox x:Name="TVTestPath" materialDesign:HintAssist.Hint="実行ファイルパス(TvTest、MPCやVLCなどの動画プレイヤーのパス)"
             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="45,10,79,10" TextWrapping="Wrap" Padding="0" VerticalContentAlignment="Stretch" Grid.Row="1"/>
         <TextBox x:Name="TVTPlayBondriver" materialDesign:HintAssist.Hint="TVTPlay用BonDriver指定(例：/d BonDriver_Pipe.dll)"
@@ -37,7 +37,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="45,10,79,10" TextWrapping="Wrap" VerticalContentAlignment="Stretch" Grid.Row="4"/>
         <Button
             Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
-            ToolTip="開く" Margin="0,0,21,10" Width="40" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Button_Click_Folder_Open" Grid.Row="4">
+            ToolTip="開く" Margin="0,0,20,10" Width="40" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Button_Click_Folder_Open" Grid.Row="4">
             <materialDesign:PackIcon
                 Kind="FolderOpen"
                 Height="24"
@@ -47,7 +47,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="45,10,79,10" TextWrapping="Wrap" VerticalContentAlignment="Stretch" Grid.Row="5"/>
         <Button
             Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
-            ToolTip="開く" Margin="0,0,21,13" Width="40" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Button_Click_Ffmpeg_Open" Grid.Row="5">
+            ToolTip="開く" Margin="0,0,20,13" Width="40" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Button_Click_Ffmpeg_Open" Grid.Row="5">
             <materialDesign:PackIcon
             Kind="File"
             Height="24"
