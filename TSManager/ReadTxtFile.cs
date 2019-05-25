@@ -32,7 +32,14 @@ namespace TSManager
             }
             else
             {
-                GetFromEit(filepath);
+                try
+                {
+                    GetFromEit(filepath);
+                }
+                catch
+                {
+                    GetFromTxt(filepath);
+                }
             }
         }
 
