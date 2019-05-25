@@ -85,7 +85,8 @@ namespace TSManager
         /// <summary>動画ファイルからパイプを用いて画像を抽出する</summary>
         public static Bitmap ReadMovieInfoFfmpeg(string inputMoviePath)//680:383
         {
-            var arguments = $"-ss 10 -i \"{inputMoviePath}\" -filter_complex \"dejudder,fps=30000/1001,fieldmatch,yadif=0:-1:1,decimate,fps=24000/1001,scale=680:383\" -vframes 1  -f image2 pipe:1";
+            //var arguments = $"-ss 10 -i \"{inputMoviePath}\" -filter_complex \"dejudder,fps=30000/1001,fieldmatch,yadif=0:-1:1,decimate,fps=24000/1001,scale=680:383\" -vframes 1  -f image2 pipe:1";
+            var arguments = $"-ss 10 -i \"{inputMoviePath}\" -filter_complex \"pullup,dejudder,fps=24000/1001,scale=680:383\" -vframes 1  -f image2 pipe:1";
             //ここでFFmpeg利用。逆テレシネでFPSによるブレと、インターレースによる横線を取り除いてサムネイルを取得。680　383
             using (var process = new Process())
             {
