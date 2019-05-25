@@ -21,9 +21,9 @@ namespace TSManager
             {
                 Listbox.ItemsSource = Util.Data.Where(files => files.Company.Equals(company.ElementAt(Mode.SelectedIndex))).OrderBy(data => data.TvSeries).ThenBy(data => data.Epinum);
             }
-            catch
+            catch (Exception ex)
             {
-
+                MessageBox.Show(ex.Message);
             }
 
         }

@@ -17,11 +17,11 @@ namespace TSManager
             {
                 Listbox.ItemsSource = Util.Data.Where(files => files.GenresIndex.Contains(Mode.SelectedIndex)).OrderBy(data => data.TvSeries).ThenBy(data => data.Epinum);
             }
-            catch
+            catch (Exception ex)
             {
-
+                MessageBox.Show(ex.Message);
             }
-            
+
 
         }
         private void ListBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
