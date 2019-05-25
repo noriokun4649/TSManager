@@ -152,7 +152,7 @@ namespace TSManager
                                 progressDiag.Value = nowCount;
                                 progress.Value = nowCount;
                                 now.Text = totalCount + "件中" + nowCount + "件完了";
-                                loadingText.Content = "TSファラオ読み込み状況：\n" + totalCount + "件中" + nowCount + "件完了";
+                                loadingText.Content = "TSファイル読み込み状況：\n" + totalCount + "件中" + nowCount + "件完了";
                             });
                         }
                         catch (IOException ex)
