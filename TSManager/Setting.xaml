@@ -55,7 +55,7 @@
             Height="24"
             Width="24" />
         </Button>
-        <TextBox x:Name="BlackList" materialDesign:HintAssist.Hint="最終フォルダのブラックリスト（カンマ区切り）"
+        <TextBox x:Name="BlackList" materialDesign:HintAssist.Hint="フォルダのブラックリスト（カンマ区切り）"
             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="45,10,79,10" TextWrapping="Wrap" VerticalContentAlignment="Stretch" Grid.Row="6"/>
 
         <CheckBox x:Name="mode" Content="EDCBの録画結果ファイルでなくTS内の番組情報を優先的に取得" HorizontalAlignment="Left" Margin="45,10,0,10" Grid.Row="7" Width="390"/>

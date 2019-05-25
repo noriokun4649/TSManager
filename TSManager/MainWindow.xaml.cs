@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -130,10 +131,7 @@ namespace TSManager
                     name.EndsWith(".m2ts", StringComparison.CurrentCultureIgnoreCase)).Where(names => {
                         foreach (var black in blacklist)
                         {
-                            if (Path.GetFileName(Path.GetDirectoryName(names)).Equals(black))
-                            {
-                                return false;
-                            }
+                            if (Regex.IsMatch(names, @".+\\" + black +@"\\.+")) return false;
                         }
                         return true;
                     });
