@@ -16,6 +16,7 @@ namespace TSManager
             Com.Text = Properties.Settings.Default.Com;
             SaveFolder.Text = Properties.Settings.Default.SaveFolder;
             FfmpegPath.Text = Properties.Settings.Default.FfmpegPath;
+            mode.IsChecked =  Properties.Settings.Default.Mode;
         }
 
         private void Button_Click_Ok(object sender, RoutedEventArgs e)
@@ -25,6 +26,7 @@ namespace TSManager
             Properties.Settings.Default.Com = Com.Text;
             Properties.Settings.Default.SaveFolder = SaveFolder.Text;
             Properties.Settings.Default.FfmpegPath = FfmpegPath.Text;
+            Properties.Settings.Default.Mode = (bool)mode.IsChecked;
             Properties.Settings.Default.Save();
             Close();
         }
