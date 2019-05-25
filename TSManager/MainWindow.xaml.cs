@@ -123,10 +123,20 @@ namespace TSManager
                     Util.Data.Clear();
                     GC.Collect();
                     var folder = Properties.Settings.Default.SaveFolder;
+                    var blacklist = Properties.Settings.Default.BlackList.Split(',');
                     IEnumerable<string> files = Directory.EnumerateFiles(@folder,"*", SearchOption.AllDirectories).Where(name =>
                     name.EndsWith(".ts",StringComparison.CurrentCultureIgnoreCase) ||
                     name.EndsWith(".m2t", StringComparison.CurrentCultureIgnoreCase) ||
-                    name.EndsWith(".m2ts", StringComparison.CurrentCultureIgnoreCase));
+                    name.EndsWith(".m2ts", StringComparison.CurrentCultureIgnoreCase)).Where(names => {
+                        foreach (var black in blacklist)
+                        {
+                            if (Path.GetFileName(Path.GetDirectoryName(names)).Equals(black))
+                            {
+                                return false;
+                            }
+                        }
+                        return true;
+                    });
                     var totalCount = files.Count();
                     var nowCount = 0;
                     Dispatcher.Invoke(() =>
