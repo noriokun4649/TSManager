@@ -54,7 +54,7 @@
             Height="24"
             Width="24" />
         </Button>
-        <CheckBox Content="EDCBの録画結果ファイルでなくTS内の番組情報を優先的に取得" HorizontalAlignment="Left" Margin="45,10,0,10" Grid.Row="6" Width="390"/>
+        <CheckBox x:Name="mode" Content="EDCBの録画結果ファイルでなくTS内の番組情報を優先的に取得" HorizontalAlignment="Left" Margin="45,10,0,10" Grid.Row="6" Width="390"/>
 
     </Grid>
 </Window>
