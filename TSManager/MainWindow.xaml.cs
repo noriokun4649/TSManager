@@ -123,7 +123,10 @@ namespace TSManager
                     Util.Data.Clear();
                     GC.Collect();
                     var folder = Properties.Settings.Default.SaveFolder;
-                    IEnumerable<string> files = Directory.EnumerateFiles(@folder, "*.ts");
+                    IEnumerable<string> files = Directory.EnumerateFiles(@folder,"*", SearchOption.AllDirectories).Where(name =>
+                    name.EndsWith(".ts",StringComparison.CurrentCultureIgnoreCase) ||
+                    name.EndsWith(".m2t", StringComparison.CurrentCultureIgnoreCase) ||
+                    name.EndsWith(".m2ts", StringComparison.CurrentCultureIgnoreCase));
                     var totalCount = files.Count();
                     var nowCount = 0;
                     Dispatcher.Invoke(() =>
