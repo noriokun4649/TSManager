@@ -50,11 +50,18 @@ namespace TSManager
         */
         public static void Setup()
         {
-            file = Path.GetTempFileName().Replace(".tmp", ".exe");
-            var bin = Properties.Resources.rplsinfo;
-            using (FileStream fs = new FileStream(file, FileMode.Create))
+            try
             {
-                fs.Write(bin, 0, bin.Length);
+                file = Path.GetTempFileName().Replace(".tmp", ".exe");
+                var bin = Properties.Resources.rplsinfo;
+                using (FileStream fs = new FileStream(file, FileMode.Create))
+                {
+                    fs.Write(bin, 0, bin.Length);
+                }
+            }
+            catch
+            {
+                MessageBox.Show("一時ファイルの作成に失敗しました。");
             }
         }
 
@@ -97,8 +104,14 @@ namespace TSManager
                     process.WaitForExit();
                     return new Bitmap(image);
                 }
-                catch (Exception)
+                catch (InvalidOperationException)
                 {
+                    Assembly myAssembly = Assembly.GetExecutingAssembly();
+                    return new Bitmap(myAssembly.GetManifestResourceStream("TSManager.icon.png"));
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
                     Assembly myAssembly = Assembly.GetExecutingAssembly();
                     return new Bitmap(myAssembly.GetManifestResourceStream("TSManager.icon.png"));
                 }
@@ -109,7 +122,7 @@ namespace TSManager
             return Path.GetDirectoryName(
                 Assembly.GetExecutingAssembly().Location);
         }
-        public static void OpenFile(string path,string filename)
+        public static void OpenFile(string path, string filename)
         {
             ProcessStartInfo psi = new ProcessStartInfo();
             psi.FileName = Settings.Default.TVTestPath;
@@ -153,7 +166,7 @@ namespace TSManager
     {
         public Files(string filename, string filepath, string tvSeries, string company, List<string> sirizeinfo,
             List<int> genresIndex, List<string> genres, TimeSpan length, DateTime starttime,
-            DateTime endtime, DateTime lastplay, BitmapSource bitmap,int epinum)
+            DateTime endtime, DateTime lastplay, BitmapSource bitmap, int epinum)
         {
             FileName = filename;
             FilePath = filepath;
