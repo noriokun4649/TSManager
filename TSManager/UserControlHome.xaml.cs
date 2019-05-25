@@ -42,7 +42,7 @@ namespace TSManager
                 "サブタイトル1:" + subtitle + "\n" +
                 "シリーズ名:" + file.TvSeries + "\n" +
                 "話数:" + wasu + "\n" +
-                "ジャンル1:" + file.Genres[1] + "\n" +
+                "ジャンル1:" + file.Genres[0] + "\n" +
                 "放送局:" + file.Company + "\n" +
                 "放送開始時間:" + file.StartTime.ToString("yyyy年MM月dd日(dddd) tthh時mm分") + "\n" +
                 "放送終了時間:" + file.EndTime.ToString("yyyy年MM月dd日(dddd) tthh時mm分") + "\n" +
