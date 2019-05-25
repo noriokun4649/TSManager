@@ -160,14 +160,15 @@ namespace TSManager
                         {
                             MessageBox.Show("やべぇーヌルッてしまった。。。ということで解析不能なTSファイルがありました。\n\n" + str);
                         }
-                        catch (OperationCanceledException) {
-                        }
                         catch (AggregateException)
                         {
-                            //MessageBox.Show("EDCBの録画結果ファイルが存在しなかったため、TSファイル内から番組情報を取得しようとしましたが見つかりませんでした。");
+                            MessageBox.Show("TSファイル内から番組情報を取得しようとしましたが見つかりませんでした。");
                         }
-
                     }
+                }
+                catch (OperationCanceledException)
+                {
+                    MessageBox.Show("キャンセルしました。");
                 }
                 catch (ArgumentException)
                 {
