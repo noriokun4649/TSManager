@@ -102,7 +102,7 @@ namespace TSManager
                     };
                     process.Start();
                     var image = Image.FromStream(process.StandardOutput.BaseStream);
-                    process.WaitForExit();
+                    process.WaitForExit(3000);
                     return new Bitmap(image);
                 }
                 catch (InvalidOperationException)
@@ -112,7 +112,7 @@ namespace TSManager
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show("スクランブル解除されていないか。TSファイルを正常に読み取れませんでした。");
                     Assembly myAssembly = Assembly.GetExecutingAssembly();
                     return new Bitmap(myAssembly.GetManifestResourceStream("TSManager.icon.png"));
                 }
