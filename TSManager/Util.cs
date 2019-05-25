@@ -20,6 +20,7 @@ namespace TSManager
         public static string[] genres = {
             "ニュース／速報","スポーツ","情報／ワイドショー","ドラマ","音楽","バラエティ","映画","アニメ／特撮","ドキュメンタリー／教養","劇場／公演","趣味／教育","福祉","その他","なし"
         };
+        public static string file;
         public static ObservableCollection<PlayData> time = new ObservableCollection<PlayData>();
         /*
         public static Bitmap ReadMovieInfo(string moviePath)
@@ -47,7 +48,15 @@ namespace TSManager
             return null;
         }
         */
-
+        public static void Setup()
+        {
+            file = Path.GetTempFileName().Replace(".tmp", ".exe");
+            var bin = Properties.Resources.rplsinfo;
+            using (FileStream fs = new FileStream(file, FileMode.Create))
+            {
+                fs.Write(bin, 0, bin.Length);
+            }
+        }
 
         public static BitmapSource Convert(Bitmap bitmap)
         {

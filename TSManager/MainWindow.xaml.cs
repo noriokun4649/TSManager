@@ -20,6 +20,7 @@ namespace TSManager
         public MainWindow()
         {
             InitializeComponent();
+            Util.Setup();
             TopBar.MouseLeftButtonDown += (o, e) => DragMove();
             if (!File.Exists(Util.GetCurrentAppDir() + @"\history.txt"))
             {
@@ -132,9 +133,9 @@ namespace TSManager
                     });
                     foreach (string str in files)
                     {
-                        token.ThrowIfCancellationRequested();
                         try
                         {
+                            token.ThrowIfCancellationRequested();
                             var bitmap = Util.ReadMovieInfoFfmpeg(str);//FFmpeg使うように。インターレース解除も
                             if (bitmap == null) throw new NullReferenceException();
                             var image = Util.Convert(bitmap);
@@ -151,18 +152,6 @@ namespace TSManager
                                 loadingText.Content = "TSファラオ読み込み状況：\n" + totalCount + "件中" + nowCount + "件完了";
                             });
                         }
-                        catch (IndexOutOfRangeException)
-                        {
-                            MessageBox.Show(str + ".program.txtファイルのパースに失敗しました。");
-                        }
-                        catch (FormatException)
-                        {
-                            MessageBox.Show(str + ".program.txtファイルのパースに失敗しました。");
-                        }
-                        catch (FileNotFoundException)
-                        {
-                            MessageBox.Show(str + ".program.txtファイルが見つかりませんでした。EDCBにて録画時に番組情報を保存するようにしてあるか確認してください。");
-                        }
                         catch (IOException ex)
                         {
                             MessageBox.Show("ファイルを開く際にIOエラーが発生しました。\n\nIOエラー詳細：" + ex.Message);
@@ -170,6 +159,12 @@ namespace TSManager
                         catch (NullReferenceException)
                         {
                             MessageBox.Show("やべぇーヌルッてしまった。。。ということで解析不能なTSファイルがありました。\n\n" + str);
+                        }
+                        catch (OperationCanceledException) {
+                        }
+                        catch (AggregateException)
+                        {
+                            //MessageBox.Show("EDCBの録画結果ファイルが存在しなかったため、TSファイル内から番組情報を取得しようとしましたが見つかりませんでした。");
                         }
 
                     }
@@ -204,7 +199,7 @@ namespace TSManager
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-
+            File.Delete(Util.file);
         }
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
