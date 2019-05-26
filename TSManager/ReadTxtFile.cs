@@ -28,6 +28,7 @@ namespace TSManager
                 catch
                 {
                     GetFromEit(filepath);
+                    Util.WriteLog("EDCBの録画結果から番組情報取得できなかったためEitから取得します。", filepath);
                 }
             }
             else
@@ -39,6 +40,7 @@ namespace TSManager
                 catch
                 {
                     GetFromTxt(filepath);
+                    Util.WriteLog("Eitから番組情報取得できなかったためEDCBの録画結果から取得します。", filepath);
                 }
             }
         }

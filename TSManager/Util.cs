@@ -62,6 +62,7 @@ namespace TSManager
             catch
             {
                 MessageBox.Show("一時ファイルの作成に失敗しました。");
+                WriteLog("一時ファイルの作成に失敗しました。", "rplsinfo.exe");
             }
         }
 
@@ -107,14 +108,13 @@ namespace TSManager
                 }
                 catch (InvalidOperationException)
                 {
-                    Assembly myAssembly = Assembly.GetExecutingAssembly();
-                    return new Bitmap(myAssembly.GetManifestResourceStream("TSManager.icon.png"));
+                    WriteLog("FFMpegが見つからないため処理できません。", inputMoviePath);
+                    return null;
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("スクランブル解除されていないか。TSファイルを正常に読み取れませんでした。");
-                    Assembly myAssembly = Assembly.GetExecutingAssembly();
-                    return new Bitmap(myAssembly.GetManifestResourceStream("TSManager.icon.png"));
+                    WriteLog($"スクランブル解除されていないか。TSファイルを正常に読み取れませんでした。 {ex.Message}", inputMoviePath);
+                    return null;
                 }
             }
         }
@@ -122,6 +122,15 @@ namespace TSManager
         {
             return Path.GetDirectoryName(
                 Assembly.GetExecutingAssembly().Location);
+        }
+
+        public static void WriteLog(string message,string filename)
+        {
+            var dateTime = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss.fff");
+            using (StreamWriter streamWriter = File.AppendText(GetCurrentAppDir() + @"\logs.txt"))
+            {
+                streamWriter.WriteLine($@"{dateTime}, {filename} ,{message}");
+            }
         }
         public static void OpenFile(string path, string filename)
         {

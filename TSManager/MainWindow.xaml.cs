@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Security;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -22,6 +24,7 @@ namespace TSManager
         {
             InitializeComponent();
             Util.Setup();
+            Util.WriteLog("アプリ起動","Application");
             TopBar.MouseLeftButtonDown += (o, e) => DragMove();
             if (!File.Exists(Util.GetCurrentAppDir() + @"\history.txt"))
             {
@@ -137,10 +140,16 @@ namespace TSManager
                     });
                     var totalCount = files.Count();
                     var nowCount = 0;
+                    var errorCount = 0;
+                    var warningCount = 0;
                     Dispatcher.Invoke(() =>
                     {
                         progressDiag.Maximum = totalCount;
                         progress.Maximum = totalCount;
+                        progressDiag.Value = nowCount;
+                        progress.Value = nowCount;
+                        now.Text = totalCount + "件中" + nowCount + "件完了(エラー" + errorCount + "件/注意"+ warningCount +"件)";
+                        loadingText.Content = "TSファイル読み込み状況\n" + totalCount + "件中" + nowCount + "件完了\n(エラー" + errorCount + "件/注意" + warningCount + "件)";
                     });
                     foreach (string str in files)
                     {
@@ -148,33 +157,57 @@ namespace TSManager
                         {
                             token.ThrowIfCancellationRequested();
                             var bitmap = Util.ReadMovieInfoFfmpeg(str);//FFmpeg使うように。インターレース解除も
-                            if (bitmap == null) throw new NullReferenceException();
+                            if (bitmap == null)
+                            {
+                                Assembly myAssembly = Assembly.GetExecutingAssembly();
+                                bitmap = new Bitmap(myAssembly.GetManifestResourceStream("TSManager.icon.png"));
+                                warningCount++;
+                                Util.WriteLog("サムネイル画像の取得に失敗しました。", str);
+                            }
                             var image = Util.Convert(bitmap);
                             image.Freeze();
                             var program = new ReadTxtFile(str + ".program.txt");
                             Util.Data.Add(new Files(program.Title, str, program.Series, program.Company, program.SeriesInfo,
                                 program.GenreIndex, program.Genre, program.Length, program.Starttime, program.Endtime, DateTime.Now, image, program.Epinum));
                             nowCount++;
-                            Dispatcher.Invoke(() =>
-                            {
-                                progressDiag.Value = nowCount;
-                                progress.Value = nowCount;
-                                now.Text = totalCount + "件中" + nowCount + "件完了";
-                                loadingText.Content = "TSファイル読み込み状況：\n" + totalCount + "件中" + nowCount + "件完了";
-                            });
+                        }
+                        catch (IndexOutOfRangeException)
+                        {
+                            errorCount++;
+                            Util.WriteLog("EDCB録画結果ファイルのパースに失敗しました。", $"{str}.program.txt");
+                        }
+                        catch (FormatException)
+                        {
+                            errorCount++;
+                            Util.WriteLog("EDCB録画結果ファイルのパースに失敗しました。", $"{str}.program.txt");
+                        }
+                        catch (FileNotFoundException)
+                        {
+                            errorCount++;
+                            Util.WriteLog("EDCB録画結果ファイルが見つかりませんでした。EDCBにて録画時に番組情報を保存するようにしてあるか確認してください。", $"{str}.program.txt");
                         }
                         catch (IOException ex)
                         {
-                            MessageBox.Show("ファイルを開く際にIOエラーが発生しました。\n\nIOエラー詳細：" + ex.Message);
+                            errorCount++;
+                            Util.WriteLog("ファイルを開く際にIOエラーが発生しました。 IOエラー詳細：" + ex.Message, str);
                         }
                         catch (NullReferenceException)
                         {
-                            MessageBox.Show("やべぇーヌルッてしまった。。。ということで解析不能なTSファイルがありました。\n\n" + str);
+                            errorCount++;
+                            Util.WriteLog("やべぇーヌルッてしまった。。。ということで解析不能なTSファイルがありました。", str);
                         }
                         catch (AggregateException)
                         {
-                            MessageBox.Show("TSファイル内から番組情報を取得しようとしましたが見つかりませんでした。");
+                            errorCount++;
+                            Util.WriteLog("TSファイル内から番組情報を取得しようとしましたが見つかりませんでした。", str);
                         }
+                        Dispatcher.Invoke(() =>
+                        {
+                            progressDiag.Value = nowCount + errorCount;
+                            progress.Value = nowCount + errorCount;
+                            now.Text = totalCount + "件中" + nowCount + "件完了(エラー" + errorCount + "件/注意" + warningCount + "件)";
+                            loadingText.Content = "TSファイル読み込み状況\n" + totalCount + "件中" + nowCount + "件完了\n(エラー" + errorCount + "件/注意" + warningCount + "件)";
+                        });
                     }
                 }
                 catch (OperationCanceledException)
@@ -212,6 +245,7 @@ namespace TSManager
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             File.Delete(Util.file);
+            Util.WriteLog("アプリ終了", "Application");
         }
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
