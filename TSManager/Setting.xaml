@@ -46,17 +46,17 @@
                 Width="24" />
         </Button>
         <TextBox x:Name="FfmpegPath" materialDesign:HintAssist.Hint="FFmpeg.exeのパス"
-            Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="45,10,79,10" TextWrapping="Wrap" VerticalContentAlignment="Stretch" Grid.Row="5"/>
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="45,10,79,10" TextWrapping="Wrap" VerticalContentAlignment="Stretch" Grid.Row="6"/>
         <Button
             Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
-            ToolTip="開く" Margin="0,0,20,13" Width="40" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Button_Click_Ffmpeg_Open" Grid.Row="5" Height="40">
+            ToolTip="開く" Margin="0,0,20,10" Width="40" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Button_Click_Ffmpeg_Open" Grid.Row="6" Height="40">
             <materialDesign:PackIcon
             Kind="File"
             Height="24"
             Width="24" />
         </Button>
         <TextBox x:Name="BlackList" materialDesign:HintAssist.Hint="フォルダのブラックリスト（カンマ区切り）"
-            Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="45,10,79,10" TextWrapping="Wrap" VerticalContentAlignment="Stretch" Grid.Row="6"/>
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="45,10,79,10" TextWrapping="Wrap" VerticalContentAlignment="Stretch" Grid.Row="5"/>
 
         <CheckBox x:Name="mode" Content="EDCBの録画結果ファイルでなくTS内の番組情報を優先的に取得" HorizontalAlignment="Left" Margin="45,10,0,10" Grid.Row="7" Width="390"/>
 
