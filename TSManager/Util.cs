@@ -7,6 +7,8 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -102,8 +104,14 @@ namespace TSManager
                         RedirectStandardOutput = true,
                     };
                     process.Start();
+                    var id = process.Id;
+                    var task = Task.Factory.StartNew(() => {
+                        var pr = Process.GetProcessById(id);
+                        Thread.Sleep(3000);
+                        pr.Kill();
+                        Util.WriteLog("指定した時間内に応答しなかったためプロセスを強制終了しました。",id.ToString());
+                    });
                     var image = Image.FromStream(process.StandardOutput.BaseStream);
-                    process.WaitForExit(3000);
                     return new Bitmap(image);
                 }
                 catch (InvalidOperationException)
@@ -126,10 +134,17 @@ namespace TSManager
 
         public static void WriteLog(string message,string filename)
         {
-            var dateTime = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss.fff");
-            using (StreamWriter streamWriter = File.AppendText(GetCurrentAppDir() + @"\logs.txt"))
+            try
             {
-                streamWriter.WriteLine($@"{dateTime}, {filename} ,{message}");
+                var dateTime = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss.fff");
+                using (StreamWriter streamWriter = File.AppendText(GetCurrentAppDir() + @"\logs.txt"))
+                {
+                    streamWriter.WriteLine($@"{dateTime}, {filename} ,{message}");
+                }
+            }
+            catch
+            {
+                MessageBox.Show("ログを書き込み出来ませんでした。書き込めなかった内容："+ message);
             }
         }
         public static void OpenFile(string path, string filename)
