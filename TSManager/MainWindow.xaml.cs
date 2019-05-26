@@ -131,6 +131,7 @@ namespace TSManager
                     IEnumerable<string> files = Directory.EnumerateFiles(@folder,"*", SearchOption.AllDirectories).Where(name =>
                     name.EndsWith(".ts",StringComparison.CurrentCultureIgnoreCase) ||
                     name.EndsWith(".m2t", StringComparison.CurrentCultureIgnoreCase) ||
+                    name.EndsWith(".mts", StringComparison.CurrentCultureIgnoreCase) ||
                     name.EndsWith(".m2ts", StringComparison.CurrentCultureIgnoreCase)).Where(names => {
                         foreach (var black in blacklist)
                         {
@@ -212,7 +213,10 @@ namespace TSManager
                 }
                 catch (OperationCanceledException)
                 {
-                    MessageBox.Show("キャンセルしました。");
+                    Dispatcher.Invoke(() =>
+                    {
+                        loadingText.Content = "TSファイル読み込み状況\nキャンセル";
+                    });
                 }
                 catch (ArgumentException)
                 {
