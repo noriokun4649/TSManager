@@ -24,32 +24,6 @@ namespace TSManager
         };
         public static string file;
         public static ObservableCollection<PlayData> time = new ObservableCollection<PlayData>();
-        /*
-        public static Bitmap ReadMovieInfo(string moviePath)
-        {
-            var movie = new MovieInfo(moviePath);
-            using (var vc = new VideoCapture(movie.Path))
-            {
-                if (vc.IsOpened())
-                {
-                    movie.FrameRate = (int)vc.Get(CaptureProperty.Fps);
-                    movie.FrameCount = (int)vc.Get(CaptureProperty.FrameCount);
-                    movie.FrameHeight = (int)vc.Get(CaptureProperty.FrameHeight);
-                    movie.FrameWidth = (int)vc.Get(CaptureProperty.FrameWidth);
-                    movie.SecCount = movie.FrameCount / movie.FrameRate;
-                    // 再生時間1秒時点のキャプチャーを取得
-                    var frameNo = (movie.FrameRate <= movie.FrameCount ? movie.FrameRate : 0);
-                    vc.Set(CaptureProperty.PosFrames, 10 * frameNo);
-                    vc.Read(movie.Thumbnail);
-                    var dispSize = new OpenCvSharp.Size(680, 383);
-                    var dispImg = movie.Thumbnail.Resize(dispSize);
-                    vc.Dispose();
-                    return BitmapConverter.ToBitmap(dispImg);
-                }
-            }
-            return null;
-        }
-        */
         public static void Setup()
         {
             try
