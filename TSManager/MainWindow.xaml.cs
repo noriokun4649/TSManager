@@ -149,8 +149,8 @@ namespace TSManager
                         progress.Maximum = totalCount;
                         progressDiag.Value = nowCount;
                         progress.Value = nowCount;
-                        now.Text = totalCount + "件中" + nowCount + "件完了(エラー" + errorCount + "件/注意"+ warningCount +"件)";
-                        loadingText.Content = "TSファイル読み込み状況\n" + totalCount + "件中" + nowCount + "件完了\n(エラー" + errorCount + "件/注意" + warningCount + "件)";
+                        now.Text = totalCount + "件中" + (nowCount + errorCount) + "件完了(エラー" + errorCount + "件/注意"+ warningCount +"件)";
+                        loadingText.Content = "TSファイル読み込み状況\n" + totalCount + "件中" + (nowCount+ errorCount) + "件完了\n(エラー" + errorCount + "件/注意" + warningCount + "件)";
                     });
                     foreach (string str in files)
                     {
@@ -206,8 +206,8 @@ namespace TSManager
                         {
                             progressDiag.Value = nowCount + errorCount;
                             progress.Value = nowCount + errorCount;
-                            now.Text = totalCount + "件中" + nowCount + "件完了(エラー" + errorCount + "件/注意" + warningCount + "件)";
-                            loadingText.Content = "TSファイル読み込み状況\n" + totalCount + "件中" + nowCount + "件完了\n(エラー" + errorCount + "件/注意" + warningCount + "件)";
+                            now.Text = totalCount + "件中" + (nowCount + errorCount) + "件完了(エラー" + errorCount + "件/注意" + warningCount + "件)";
+                            loadingText.Content = "TSファイル読み込み状況\n" + totalCount + "件中" + (nowCount + errorCount) + "件完了\n(エラー" + errorCount + "件/注意" + warningCount + "件)";
                         });
                     }
                 }
