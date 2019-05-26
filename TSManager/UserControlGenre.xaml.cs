@@ -17,7 +17,14 @@ namespace TSManager
         {
             try
             {
-                Listbox.ItemsSource = Util.Data.Where(files => files.GenresIndex.Contains(Mode.SelectedIndex)).OrderBy(data => data.TvSeries).ThenBy(data => data.Epinum);
+                if (Mode.SelectedIndex >= 0) {
+                    Listbox.ItemsSource = Util.Data.Where(files => files.GenresIndex.Contains(Mode.SelectedIndex)).OrderBy(data => data.TvSeries).ThenBy(data => data.Epinum);
+
+                }
+                else
+                {
+                    Listbox.ItemsSource = Util.Data;
+                }
             }
             catch (Exception ex)
             {
