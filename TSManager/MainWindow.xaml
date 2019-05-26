@@ -38,11 +38,59 @@
                                     </StackPanel>
                                 </Button>
                                 <Separator/>
-                                <Button>
+                                <Button  Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <materialDesign:PackIcon Kind="Filter" VerticalAlignment="Center" Height="25" Width="25"/>
                                         <TextBlock VerticalAlignment="Center" Margin="10,0,0,0">絞り込み</TextBlock>
                                     </StackPanel>
+                                    <Button.CommandParameter>
+                                        <StackPanel Margin="16">
+                                            <Label FontSize="20">絞り込み</Label>
+                                            <StackPanel Orientation="Horizontal">
+                                                <ComboBox materialDesign:HintAssist.Hint="絞り込み項目" Margin="16">
+                                                    <ComboBoxItem>
+                                                        番組タイトル
+                                                    </ComboBoxItem>
+                                                    <ComboBoxItem>
+                                                        番組サブタイトル
+                                                    </ComboBoxItem>
+                                                    <ComboBoxItem>
+                                                        シリーズ名
+                                                    </ComboBoxItem>
+                                                    <ComboBoxItem>
+                                                        放送局名
+                                                    </ComboBoxItem>
+                                                    <ComboBoxItem>
+                                                        ジャンル名
+                                                    </ComboBoxItem>
+                                                    <ComboBoxItem>
+                                                        日付
+                                                    </ComboBoxItem>
+                                                    <ComboBoxItem>
+                                                        録画開始時間
+                                                    </ComboBoxItem>
+                                                    <ComboBoxItem>
+                                                        録画終了時間
+                                                    </ComboBoxItem>
+                                                    <ComboBoxItem>
+                                                        録画時間
+                                                    </ComboBoxItem>
+                                                </ComboBox>
+                                                <TextBox x:Name="Search"  Margin="16" materialDesign:HintAssist.Hint="絞り込み内容"
+                                            Style="{StaticResource MaterialDesignFloatingHintTextBox}" TextWrapping="Wrap" VerticalContentAlignment="Stretch" Width="300"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True" 
+                                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                                            CommandParameter="Sample2Cancel"
+                                            HorizontalAlignment="Center">キャンセル</Button>
+                                                <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True" 
+                                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                                            CommandParameter="Sample2Cancel"
+                                            HorizontalAlignment="Center">Let's 絞り込み</Button>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Button.CommandParameter>
                                 </Button>
                             </StackPanel>
                         </materialDesign:PopupBox>
