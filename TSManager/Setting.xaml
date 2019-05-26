@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="設定" Height="579.696" Width="520" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+        Title="設定" Height="598.799" Width="520" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -27,8 +27,8 @@
             Height="24"
             Width="24" />
         </Button>
-        <Button Content="OK" Margin="0,0,160,20" Height="32" HorizontalAlignment="Right" Width="93" Click="Button_Click_Ok" VerticalAlignment="Bottom" Grid.Row="8"/>
-        <Button Content="キャンセル" Margin="0,0,32,20" Height="32" RenderTransformOrigin="-0.921,0.559" Click="Button_Click_Cancel" HorizontalAlignment="Right" Width="93" VerticalAlignment="Bottom" Grid.Row="8"/>
+        <Button Content="OK" Margin="0,0,161,20" HorizontalAlignment="Right" Width="93" Click="Button_Click_Ok" Grid.Row="8" Height="34" VerticalAlignment="Bottom"/>
+        <Button Content="キャンセル" Margin="386,0,30,20" RenderTransformOrigin="-0.753,0.528" Click="Button_Click_Cancel" Grid.Row="8" Height="34" VerticalAlignment="Bottom"/>
         <TextBox x:Name="TVTestPath" materialDesign:HintAssist.Hint="実行ファイルパス(TvTest、MPCやVLCなどの動画プレイヤーのパス)"
             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="45,10,79,10" TextWrapping="Wrap" Padding="0" VerticalContentAlignment="Stretch" Grid.Row="1"/>
         <TextBox x:Name="TVTPlayBondriver" materialDesign:HintAssist.Hint="TVTPlay用BonDriver指定(例：/d BonDriver_Pipe.dll)"
@@ -59,6 +59,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="45,10,79,10" TextWrapping="Wrap" VerticalContentAlignment="Stretch" Grid.Row="5"/>
 
         <CheckBox x:Name="mode" Content="EDCBの録画結果ファイルでなくTS内の番組情報を優先的に取得" HorizontalAlignment="Left" Margin="45,10,0,10" Grid.Row="7" Width="390"/>
+        <Button Content="上級者向け" HorizontalAlignment="Right" Margin="0,0,378,20" Grid.Row="8" Width="105" Height="34" VerticalAlignment="Bottom"/>
 
     </Grid>
 </Window>
