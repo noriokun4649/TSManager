@@ -59,7 +59,7 @@ namespace TSManager
                     };
                     process.Start();
                     var infos = process.StandardOutput.ReadToEnd().Split(',');
-                    Company = infos[0];
+                    Company = infos[0].Normalize(NormalizationForm.FormKC);
                     Title = infos[1];
                     Subtitle = infos[2];
                     var day = infos[3];
@@ -104,7 +104,7 @@ namespace TSManager
         {
             var file = File.ReadAllLines(filepath);
             var time = file[0];
-            Company = file[1];
+            Company = file[1].Normalize(NormalizationForm.FormKC);
             Title = file[2];
 
             var timesprit = time.Split(' ');
