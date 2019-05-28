@@ -129,6 +129,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="UserControlListItem.xaml.cs">
+      <DependentUpon>UserControlListItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ReadTxtFile.cs" />
     <Compile Include="Setting.xaml.cs">
       <DependentUpon>Setting.xaml</DependentUpon>
@@ -149,6 +152,10 @@
       <DependentUpon>UserControlHome.xaml</DependentUpon>
     </Compile>
     <Compile Include="Util.cs" />
+    <Page Include="UserControlListItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

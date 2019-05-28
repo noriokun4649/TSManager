@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local1="clr-namespace:TSManager"
              mc:Ignorable="d" 
              >
     <Grid Margin="10" >
@@ -26,19 +27,7 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Grid Margin="5" VerticalAlignment="Top" Width="700" >
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Image Height="200" Source="{Binding Bitmap}" VerticalAlignment="Top" />
-                        <StackPanel Orientation="Vertical" Margin="10" Grid.Column="1">
-                            <TextBlock Text="{Binding FileName}" Margin="10" TextWrapping="Wrap" />
-                            <TextBlock Text="{Binding TvSeries}" Margin="10" TextWrapping="Wrap" />
-                            <TextBlock Text="{Binding TvSeriesInfo[0]}" Margin="10" TextWrapping="Wrap" />
-                            <TextBlock Text="{Binding Company}" Margin="10" TextWrapping="Wrap" />
-                        </StackPanel>
-                    </Grid>
+                    <local1:UserControlListItem/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ListBox>

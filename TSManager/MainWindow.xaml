@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" mc:Ignorable="d" Height="600" Width="1080" Foreground="White" WindowStartupLocation="CenterScreen" Closing="Window_Closing" Title="TS Manager" MinWidth="1080" MinHeight="600">
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" mc:Ignorable="d" Height="540" Width="960" Foreground="White" WindowStartupLocation="CenterScreen" Closing="Window_Closing" Title="TS Manager" MinWidth="960" MinHeight="540">
 
     <Grid  Background="#f5f5f5">
         <materialDesign:DialogHost x:Name="Diag">
