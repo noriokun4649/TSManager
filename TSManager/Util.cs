@@ -63,7 +63,7 @@ namespace TSManager
         public static Bitmap ReadMovieInfoFfmpeg(string inputMoviePath)//680:383
         {
             //var arguments = $"-ss 10 -i \"{inputMoviePath}\" -filter_complex \"dejudder,fps=30000/1001,fieldmatch,yadif=0:-1:1,decimate,fps=24000/1001,scale=680:383\" -vframes 1  -f image2 pipe:1";
-            var arguments = $"-ss 10 -i \"{inputMoviePath}\" -filter_complex \"pullup,dejudder,fps=24000/1001,scale=680:383\" -vframes 1  -f image2 pipe:1";
+            var arguments = $"-ss {Settings.Default.FfmpegSec.ToString()} -i \"{inputMoviePath}\" {Settings.Default.FfmpegPara.ToString()} -f image2 pipe:1";
             //ここでFFmpeg利用。逆テレシネでFPSによるブレと、インターレースによる横線を取り除いてサムネイルを取得。680　383
             using (var process = new Process())
             {
@@ -81,7 +81,7 @@ namespace TSManager
                     var id = process.Id;
                     var task = Task.Factory.StartNew(() => {
                         var pr = Process.GetProcessById(id);
-                        Thread.Sleep(3000);
+                        Thread.Sleep(Properties.Settings.Default.FFmpegWaitSec);
                         pr.Kill();
                         Util.WriteLog("指定した時間内に応答しなかったためプロセスを強制終了しました。",id.ToString());
                     });

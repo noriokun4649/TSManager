@@ -59,7 +59,7 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="45,10,79,10" TextWrapping="Wrap" VerticalContentAlignment="Stretch" Grid.Row="5"/>
 
         <CheckBox x:Name="mode" Content="EDCBの録画結果ファイルでなくTS内の番組情報を優先的に取得" HorizontalAlignment="Left" Margin="45,10,0,10" Grid.Row="7" Width="390"/>
-        <Button Content="上級者向け" HorizontalAlignment="Right" Margin="0,0,378,20" Grid.Row="8" Width="105" Height="34" VerticalAlignment="Bottom"/>
+        <Button Content="上級者向け" HorizontalAlignment="Right" Margin="0,0,378,20" Grid.Row="8" Width="105" Height="34" VerticalAlignment="Bottom" Click="Button_Click_1"/>
 
     </Grid>
 </Window>

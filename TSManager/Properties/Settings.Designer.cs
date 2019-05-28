@@ -106,5 +106,41 @@ namespace TSManager.Properties {
                 this["BlackList"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-filter_complex \"pullup,dejudder,fps=24000/1001,scale=680:383\" -vframes 1")]
+        public string FfmpegPara {
+            get {
+                return ((string)(this["FfmpegPara"]));
+            }
+            set {
+                this["FfmpegPara"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public string FfmpegSec {
+            get {
+                return ((string)(this["FfmpegSec"]));
+            }
+            set {
+                this["FfmpegSec"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3000")]
+        public int FFmpegWaitSec {
+            get {
+                return ((int)(this["FFmpegWaitSec"]));
+            }
+            set {
+                this["FFmpegWaitSec"] = value;
+            }
+        }
     }
 }

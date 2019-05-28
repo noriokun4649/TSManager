@@ -76,5 +76,12 @@ namespace TSManager
                 this.SaveFolder.Text = dialog.FileName;
             }
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            var window = new ProSetting();
+            window.Owner = this;
+            window.ShowDialog();
+        }
     }
 }
