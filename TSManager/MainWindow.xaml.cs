@@ -17,7 +17,7 @@ namespace TSManager
     /// <summary>
     /// Interação lógica para MainWindow.xam
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, IDisposable
     {
         private CancellationTokenSource tokenSource = null;
         public MainWindow()
@@ -45,32 +45,32 @@ namespace TSManager
                 case "ItemHome":
                     usc = new UserControlHome();
                     GridMain.Children.Add(usc);
-                    Top.Text = "Home";
+                    TopText.Text = "Home";
                     break;
                 case "ItemGenre":
                     usc = new UserControlGenre();
                     GridMain.Children.Add(usc);
-                    Top.Text = "番組のジャンル別";
+                    TopText.Text = "番組のジャンル別";
                     break;
                 case "ItemCompany":
                     usc = new UserControlCompany();
                     GridMain.Children.Add(usc);
-                    Top.Text = "番組の放送局別";
+                    TopText.Text = "番組の放送局別";
                     break;
                 case "ItemPackage":
                     usc = new UserControlProgram();
                     GridMain.Children.Add(usc);
-                    Top.Text = "番組のシリーズ別";
+                    TopText.Text = "番組のシリーズ別";
                     break;
                 case "ItemHistory":
                     usc = new UserControlGenre();
                     GridMain.Children.Add(usc);
-                    Top.Text = "番組の再生履歴";
+                    TopText.Text = "番組の再生履歴";
                     break;
                 case "ItemDay":
                     usc = new UserControlDay();
                     GridMain.Children.Add(usc);
-                    Top.Text = "日付別";
+                    TopText.Text = "日付別";
                     break;
                 default:
                     break;
@@ -255,6 +255,19 @@ namespace TSManager
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
             tokenSource.Cancel();
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                tokenSource.Dispose();
+            }
+            // free native resources
+        }
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

@@ -99,7 +99,7 @@
                         </Button>
 
                     </StackPanel>
-                    <TextBlock x:Name="Top" Text="Homo (Home)" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" />
+                    <TextBlock x:Name="TopText" Text="Homo (Home)" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" />
                 </Grid>
                 <Grid x:Name="GridMenu" Width="200" HorizontalAlignment="Left" Background="#FF31577E">
                     <Grid.Effect>
