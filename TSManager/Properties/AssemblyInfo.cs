@@ -19,7 +19,7 @@ using System.Windows;
 // Definir ComVisible como false torna os tipos neste assembly invisíveis
 // para componentes COM. Caso precise acessar um tipo neste assembly de
 // COM, defina o atributo ComVisible como true nesse tipo.
-[assembly: ComVisible(true)]
+[assembly: ComVisible(false)]
 
 //Para começar a compilar aplicativos localizáveis, configure
 //<UICulture>CultureYouAreCodingWith</UICulture> no seu arquivo .csproj
