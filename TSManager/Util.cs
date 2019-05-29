@@ -123,9 +123,11 @@ namespace TSManager
         }
         public static void OpenFile(string path, string filename)
         {
-            ProcessStartInfo psi = new ProcessStartInfo();
-            psi.FileName = Settings.Default.TVTestPath;
-            psi.Arguments = Settings.Default.TVTPlayBondriver + " " + Settings.Default.Com + @" """ + path + @"""";
+            ProcessStartInfo psi = new ProcessStartInfo
+            {
+                FileName = Settings.Default.TVTestPath,
+                Arguments = Settings.Default.TVTPlayBondriver + " " + Settings.Default.Com + @" """ + path + @""""
+            };
             try
             {
                 Process.Start(psi);

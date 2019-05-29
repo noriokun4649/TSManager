@@ -40,8 +40,10 @@ namespace TSManager
 
         private void Button_Click_File_Open(object sender, RoutedEventArgs e)
         {
-            var dialog = new CommonOpenFileDialog();
-            dialog.Title = "実行ファイルパス(TvTest、MPCやVLCなどの動画プレイヤーのパス)を取得する";
+            var dialog = new CommonOpenFileDialog
+            {
+                Title = "実行ファイルパス(TvTest、MPCやVLCなどの動画プレイヤーのパス)を取得する"
+            };
             dialog.Filters.Add(new CommonFileDialogFilter("実行ファイル", "*.exe")); 
             dialog.Filters.Add(new CommonFileDialogFilter("すべてのファイル", "*.*"));
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
@@ -68,9 +70,11 @@ namespace TSManager
 
         private void Button_Click_Folder_Open(object sender, RoutedEventArgs e)
         {
-            var dialog = new CommonOpenFileDialog();
-            dialog.Title = "録画保存フォルダを取得する";
-            dialog.IsFolderPicker = true;
+            var dialog = new CommonOpenFileDialog
+            {
+                Title = "録画保存フォルダを取得する",
+                IsFolderPicker = true
+            };
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
                 this.SaveFolder.Text = dialog.FileName;
@@ -79,8 +83,10 @@ namespace TSManager
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            var window = new ProSetting();
-            window.Owner = this;
+            var window = new ProSetting
+            {
+                Owner = this
+            };
             window.ShowDialog();
         }
     }

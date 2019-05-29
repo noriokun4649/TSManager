@@ -84,8 +84,10 @@ namespace TSManager
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var setting = new Setting();
-            setting.Owner = this;
+            var setting = new Setting
+            {
+                Owner = this
+            };
             setting.ShowDialog();
         }
 
