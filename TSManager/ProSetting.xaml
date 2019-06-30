@@ -14,8 +14,8 @@
             <RowDefinition Height="70"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Button Content="OK" Margin="0,0,161,20" HorizontalAlignment="Right" Width="93" Click="Button_Click_Ok" Grid.Row="8" Height="34" VerticalAlignment="Bottom"/>
-        <Button Content="キャンセル" Margin="386,0,30,20" RenderTransformOrigin="-0.753,0.528" Click="Button_Click_Cancel" Grid.Row="8" Height="34" VerticalAlignment="Bottom"/>
+        <Button Content="OK" Margin="0,0,30,20" HorizontalAlignment="Right" Width="93" Click="Button_Click_Ok" Grid.Row="4" Height="34" VerticalAlignment="Bottom"/>
+        <Button Content="キャンセル" Margin="255,0,161,20" RenderTransformOrigin="-0.753,0.528" Click="Button_Click_Cancel" Grid.Row="4" Height="34" VerticalAlignment="Bottom"/>
         <TextBox x:Name="FFmpegSec" materialDesign:HintAssist.Hint="FFmpegでのサムネイル取得する場所の秒数を指定"
             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="45,10,45,10" TextWrapping="Wrap" Padding="0" VerticalContentAlignment="Stretch" Grid.Row="1"/>
         <TextBox x:Name="FFmpegPara" materialDesign:HintAssist.Hint="FFmpegのパラメータを指定"

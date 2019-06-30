@@ -27,8 +27,8 @@
             Height="24"
             Width="24" />
         </Button>
-        <Button Content="OK" Margin="0,0,161,20" HorizontalAlignment="Right" Width="93" Click="Button_Click_Ok" Grid.Row="8" Height="34" VerticalAlignment="Bottom"/>
-        <Button Content="キャンセル" Margin="386,0,30,20" RenderTransformOrigin="-0.753,0.528" Click="Button_Click_Cancel" Grid.Row="8" Height="34" VerticalAlignment="Bottom"/>
+        <Button Content="OK" Margin="0,0,20,20" HorizontalAlignment="Right" Width="93" Click="Button_Click_Ok" Grid.Row="8" Height="34" VerticalAlignment="Bottom"/>
+        <Button Content="キャンセル" Margin="274,0,142,20" RenderTransformOrigin="-0.753,0.528" Click="Button_Click_Cancel" Grid.Row="8" Height="34" VerticalAlignment="Bottom"/>
         <TextBox x:Name="TVTestPath" materialDesign:HintAssist.Hint="実行ファイルパス(TvTest、MPCやVLCなどの動画プレイヤーのパス)"
             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="45,10,79,10" TextWrapping="Wrap" Padding="0" VerticalContentAlignment="Stretch" Grid.Row="1"/>
         <TextBox x:Name="TVTPlayBondriver" materialDesign:HintAssist.Hint="TVTPlay用BonDriver指定(例：/d BonDriver_Pipe.dll)"
