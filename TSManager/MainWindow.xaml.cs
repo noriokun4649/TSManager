@@ -23,8 +23,8 @@ namespace TSManager
         public MainWindow()
         {
             InitializeComponent();
-            Util.Setup();
-            Util.WriteLog("アプリ起動","Application");
+        Util.Setup();
+            Util.logger.Info("アプリ起動");
             TopBar.MouseLeftButtonDown += (o, e) => DragMove();
             if (!File.Exists(Util.GetCurrentAppDir() + @"\history.txt"))
             {
@@ -165,7 +165,7 @@ namespace TSManager
                                 Assembly myAssembly = Assembly.GetExecutingAssembly();
                                 bitmap = new Bitmap(myAssembly.GetManifestResourceStream("TSManager.icon.png"));
                                 warningCount++;
-                                Util.WriteLog("サムネイル画像の取得に失敗しました。", str);
+                                Util.logger.Error($"[{str}]サムネイル画像の取得に失敗しました。");
                             }
                             var image = Util.Convert(bitmap);
                             image.Freeze();
@@ -177,32 +177,32 @@ namespace TSManager
                         catch (IndexOutOfRangeException)
                         {
                             errorCount++;
-                            Util.WriteLog("EDCB録画結果ファイルのパースに失敗しました。", $"{str}.program.txt");
+                            Util.logger.Error($"[{str}.program.txt]EDCB録画結果ファイルのパースに失敗しました。");
                         }
                         catch (FormatException)
                         {
                             errorCount++;
-                            Util.WriteLog("EDCB録画結果ファイルのパースに失敗しました。", $"{str}.program.txt");
+                            Util.logger.Error($"[{str}.program.txt]EDCB録画結果ファイルのパースに失敗しました。");
                         }
                         catch (FileNotFoundException)
                         {
                             errorCount++;
-                            Util.WriteLog("EDCB録画結果ファイルが見つかりませんでした。EDCBにて録画時に番組情報を保存するようにしてあるか確認してください。", $"{str}.program.txt");
+                            Util.logger.Error($"[{str}.program.txt]EDCB録画結果ファイルが見つかりませんでした。EDCBにて録画時に番組情報を保存するようにしてあるか確認してください。");
                         }
                         catch (IOException ex)
                         {
                             errorCount++;
-                            Util.WriteLog("ファイルを開く際にIOエラーが発生しました。 IOエラー詳細：" + ex.Message, str);
+                            Util.logger.Error($"[{str}]ファイルを開く際にIOエラーが発生しました。 IOエラー詳細：{ex.Message}");
                         }
                         catch (NullReferenceException)
                         {
                             errorCount++;
-                            Util.WriteLog("やべぇーヌルッてしまった。。。ということで解析不能なTSファイルがありました。", str);
+                            Util.logger.Error($"[{str}]やべぇーヌルッてしまった。。。ということで解析不能なTSファイルがありました。");
                         }
                         catch (AggregateException)
                         {
                             errorCount++;
-                            Util.WriteLog("TSファイル内から番組情報を取得しようとしましたが見つかりませんでした。", str);
+                            Util.logger.Error($"[{str}]TSファイル内から番組情報を取得しようとしましたが見つかりませんでした。");
                         }
                         Dispatcher.Invoke(() =>
                         {
@@ -223,22 +223,27 @@ namespace TSManager
                 catch (ArgumentException)
                 {
                     MessageBox.Show("設定画面にて録画保存フォルダの設定がされていないようです。設定しなおしてください。");
+                    Util.logger.Warn("設定画面にて録画保存フォルダの設定がされていないようです。設定しなおしてください。");
                 }
                 catch (DirectoryNotFoundException)
                 {
                     MessageBox.Show("設定で指定されている録画保存フォルダのパスが正しくないようです。設定しなおしてください。");
+                    Util.logger.Warn("設定で指定されている録画保存フォルダのパスが正しくないようです。設定しなおしてください。");
                 }
                 catch (UnauthorizedAccessException)
                 {
                     MessageBox.Show("ファイルにアクセスする権利がありません。このアプリを管理者で実行するかアクセス制御を見直してください。");
+                    Util.logger.Warn("ファイルにアクセスする権利がありません。このアプリを管理者で実行するかアクセス制御を見直してください。");
                 }
                 catch (SecurityException)
                 {
                     MessageBox.Show("ファイルにアクセスする権利がありません。このアプリを管理者で実行するかアクセス制御を見直してください。");
+                    Util.logger.Warn("ファイルにアクセスする権利がありません。このアプリを管理者で実行するかアクセス制御を見直してください。");
                 }
                 catch (IOException ex)
                 {
                     MessageBox.Show("ファイルを開く際にIOエラーが発生しました。\n\nIOエラー詳細：" + ex.Message);
+                    Util.logger.Error($"ファイルを開く際にIOエラーが発生しました。 IOエラー詳細：{ex.Message}");
                 }
                 Dispatcher.Invoke(() =>
                 {
@@ -251,7 +256,7 @@ namespace TSManager
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             File.Delete(Util.file);
-            Util.WriteLog("アプリ終了", "Application");
+            Util.logger.Info("アプリ終了");
         }
 
         private void Button_Click_3(object sender, RoutedEventArgs e)

@@ -18,6 +18,7 @@ namespace TSManager
 {
     class Util
     {
+        public static log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public static ObservableCollection<Files> Data = new ObservableCollection<Files>();
         public static string[] genres = {
             "ニュース／速報","スポーツ","情報／ワイドショー","ドラマ","音楽","バラエティ","映画","アニメ／特撮","ドキュメンタリー／教養","劇場／公演","趣味／教育","福祉","その他","なし"
@@ -38,7 +39,7 @@ namespace TSManager
             catch
             {
                 MessageBox.Show("一時ファイルの作成に失敗しました。");
-                WriteLog("一時ファイルの作成に失敗しました。", "rplsinfo.exe");
+                logger.Fatal("rplsinfo.exeの一時ファイルを作成するのに失敗しました。");
             }
         }
 
@@ -83,19 +84,20 @@ namespace TSManager
                         var pr = Process.GetProcessById(id);
                         Thread.Sleep(Properties.Settings.Default.FFmpegWaitSec);
                         pr.Kill();
-                        Util.WriteLog("指定した時間内に応答しなかったためプロセスを強制終了しました。",id.ToString());
+
+                        logger.Info($"指定した時間内に応答しなかったためプロセスを強制終了しました。{id.ToString()}");
                     });
                     var image = Image.FromStream(process.StandardOutput.BaseStream);
                     return new Bitmap(image);
                 }
                 catch (InvalidOperationException)
                 {
-                    WriteLog("FFMpegが見つからないため処理できません。", inputMoviePath);
+                    logger.Warn($"[{inputMoviePath}]FFMpegが見つからないため処理できません。:");
                     return null;
                 }
                 catch (Exception ex)
                 {
-                    WriteLog($"スクランブル解除されていないか。TSファイルを正常に読み取れませんでした。 {ex.Message}", inputMoviePath);
+                    logger.Warn($"[{inputMoviePath}]スクランブル解除されていないか。TSファイルを正常に読み取れませんでした。 {ex.Message}");
                     return null;
                 }
             }
@@ -106,21 +108,6 @@ namespace TSManager
                 Assembly.GetExecutingAssembly().Location);
         }
 
-        public static void WriteLog(string message,string filename)
-        {
-            try
-            {
-                var dateTime = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss.fff");
-                using (StreamWriter streamWriter = File.AppendText(GetCurrentAppDir() + @"\logs.txt"))
-                {
-                    streamWriter.WriteLine($@"{dateTime}, {filename} ,{message}");
-                }
-            }
-            catch
-            {
-                MessageBox.Show("ログを書き込み出来ませんでした。書き込めなかった内容："+ message);
-            }
-        }
         public static void OpenFile(string path, string filename)
         {
             ProcessStartInfo psi = new ProcessStartInfo
