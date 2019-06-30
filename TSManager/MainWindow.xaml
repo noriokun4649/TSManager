@@ -5,16 +5,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" mc:Ignorable="d" Height="540" Width="960" Foreground="White" WindowStartupLocation="CenterScreen" Closing="Window_Closing" Title="TS Manager" MinWidth="960" MinHeight="540">
 
-    <Grid  Background="#f5f5f5">
+    <Grid Background="#f5f5f5">
         <materialDesign:DialogHost x:Name="Diag">
-            <materialDesign:DialogHost.DialogContent>
-                <StackPanel Margin="16">
-                    <TextBlock>TSファイル一覧をスキャンして読み込み中です</TextBlock>
-                    <TextBlock x:Name="now" Text=""/>
-                    <ProgressBar x:Name="progressDiag" Height="15" Margin="10" RenderTransformOrigin="0.497,-0.833" Grid.Row="1"/>
-                    <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Content="ダイアログを隠す"/>
-                </StackPanel>
-            </materialDesign:DialogHost.DialogContent>
             <Grid>
                 <Grid x:Name="GridMain" Margin="200,60,0,0" />
                 <Grid x:Name="TopBar" Height="60" VerticalAlignment="Top" Background="#FF5C99D6">
@@ -22,81 +14,148 @@
                         <DropShadowEffect BlurRadius="1" ShadowDepth="1" Color="#FFACACAC"/>
                     </Grid.Effect>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <TextBlock Text="TS Manager&#10;    v1.0.0" VerticalAlignment="Center" FontSize="16"/>
+                        <Button Height="30" Width="30" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}">
+                            <materialDesign:PackIcon Kind="Search" Height="25" Width="25"/>
+                        </Button>
+                        <Button Height="30" Width="30" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}">
+                            <materialDesign:PackIcon Kind="Sort" Height="25" Width="25"/>
+                            <Button.CommandParameter>
+                                <StackPanel Margin="16">
+                                    <Label FontSize="20">ソート</Label>
+                                    <StackPanel  Margin="16" Orientation="Horizontal">
+                                        <ComboBox materialDesign:HintAssist.Hint="並び替え項目" Margin="0,16,16,16" Width="120">
+                                            <ComboBoxItem>
+                                                番組タイトル
+                                            </ComboBoxItem>
+                                            <ComboBoxItem>
+                                                番組サブタイトル
+                                            </ComboBoxItem>
+                                            <ComboBoxItem>
+                                                シリーズ名
+                                            </ComboBoxItem>
+                                            <ComboBoxItem>
+                                                放送局名
+                                            </ComboBoxItem>
+                                            <ComboBoxItem>
+                                                ジャンル名
+                                            </ComboBoxItem>
+                                            <ComboBoxItem>
+                                                日付
+                                            </ComboBoxItem>
+                                            <ComboBoxItem>
+                                                録画開始時間
+                                            </ComboBoxItem>
+                                            <ComboBoxItem>
+                                                録画終了時間
+                                            </ComboBoxItem>
+                                            <ComboBoxItem>
+                                                録画時間
+                                            </ComboBoxItem>
+                                        </ComboBox>
+
+                                        <StackPanel Margin="7" Orientation="Vertical" HorizontalAlignment="Right">
+
+                                            <RadioButton Margin="7" Style="{StaticResource MaterialDesignRadioButton}" Tag="True">昇順
+                                            </RadioButton>
+
+                                            <RadioButton Margin="7" Style="{StaticResource MaterialDesignRadioButton}" Tag="True">降順
+                                            </RadioButton>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" CommandParameter="Sample2Cancel" HorizontalAlignment="Center">キャンセル</Button>
+                                        <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" CommandParameter="Sample2Cancel" HorizontalAlignment="Center">Let's 並び替え</Button>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Button.CommandParameter>
+                        </Button>
+                        <Button Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}">
+                            <materialDesign:PackIcon Kind="Filter" VerticalAlignment="Center" Height="25" Width="25"/>
+                            <Button.CommandParameter>
+                                <StackPanel Margin="16">
+                                    <Label FontSize="20">絞り込み</Label>
+                                    <StackPanel Orientation="Horizontal">
+                                        <ComboBox materialDesign:HintAssist.Hint="絞り込み項目" Margin="16" Width="120">
+                                            <ComboBoxItem>
+                                                番組タイトル
+                                            </ComboBoxItem>
+                                            <ComboBoxItem>
+                                                番組サブタイトル
+                                            </ComboBoxItem>
+                                            <ComboBoxItem>
+                                                シリーズ名
+                                            </ComboBoxItem>
+                                            <ComboBoxItem>
+                                                放送局名
+                                            </ComboBoxItem>
+                                            <ComboBoxItem>
+                                                ジャンル名
+                                            </ComboBoxItem>
+                                            <ComboBoxItem>
+                                                日付
+                                            </ComboBoxItem>
+                                            <ComboBoxItem>
+                                                録画開始時間
+                                            </ComboBoxItem>
+                                            <ComboBoxItem>
+                                                録画終了時間
+                                            </ComboBoxItem>
+                                            <ComboBoxItem>
+                                                録画時間
+                                            </ComboBoxItem>
+                                        </ComboBox>
+                                        <TextBox x:Name="Search" Margin="16" materialDesign:HintAssist.Hint="絞り込み内容" Style="{StaticResource MaterialDesignFloatingHintTextBox}" TextWrapping="Wrap" VerticalContentAlignment="Stretch" Width="300"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" CommandParameter="Sample2Cancel" HorizontalAlignment="Center">キャンセル</Button>
+                                        <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" CommandParameter="Sample2Cancel" HorizontalAlignment="Center">Let's 絞り込み</Button>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Button.CommandParameter>
+                        </Button>
                         <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Margin="10">
                             <StackPanel Width="150">
+                                <Button Click="Button_Click_2" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <materialDesign:PackIcon Kind="Reload" VerticalAlignment="Center" Height="25" Width="25"/>
+                                        <TextBlock VerticalAlignment="Center" Margin="10,0,0,0">TSスキャン</TextBlock>
+                                    </StackPanel>
+                                    <Button.CommandParameter>
+                                        <StackPanel Margin="16">
+                                            <TextBlock>TSファイル一覧をスキャンして読み込み中です</TextBlock>
+                                            <TextBlock x:Name="now" Text=""/>
+                                            <ProgressBar x:Name="progressDiag" Height="15" Margin="10" RenderTransformOrigin="0.497,-0.833" Grid.Row="1"/>
+                                            <Button Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Content="ダイアログを隠す"/>
+                                        </StackPanel>
+                                    </Button.CommandParameter>
+                                </Button>
+                                <Separator/>
+                                <Button Click="Button_Click">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <materialDesign:PackIcon Kind="GithubCircle" VerticalAlignment="Center" Height="25" Width="25"/>
+                                        <TextBlock VerticalAlignment="Center" Margin="10,0,0,0">オープンソース</TextBlock>
+                                    </StackPanel>
+                                </Button>
+                                <Button Click="Button_Click">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <materialDesign:PackIcon Kind="Information" VerticalAlignment="Center" Height="25" Width="25"/>
+                                        <TextBlock VerticalAlignment="Center" Margin="10,0,0,0">バージョン情報</TextBlock>
+                                    </StackPanel>
+                                </Button>
                                 <Button Click="Button_Click">
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <materialDesign:PackIcon Kind="Settings" VerticalAlignment="Center" Height="25" Width="25"/>
                                         <TextBlock VerticalAlignment="Center" Margin="10,0,0,0">設定</TextBlock>
                                     </StackPanel>
                                 </Button>
-                                <Button Click="Button_Click_2" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
-                                        <materialDesign:PackIcon Kind="Reload" VerticalAlignment="Center" Height="25" Width="25"/>
-                                        <TextBlock VerticalAlignment="Center" Margin="10,0,0,0">TSスキャン</TextBlock>
-                                    </StackPanel>
-                                </Button>
-                                <Separator/>
-                                <Button  Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                        <materialDesign:PackIcon Kind="Filter" VerticalAlignment="Center" Height="25" Width="25"/>
-                                        <TextBlock VerticalAlignment="Center" Margin="10,0,0,0">絞り込み</TextBlock>
-                                    </StackPanel>
-                                    <Button.CommandParameter>
-                                        <StackPanel Margin="16">
-                                            <Label FontSize="20">絞り込み</Label>
-                                            <StackPanel Orientation="Horizontal">
-                                                <ComboBox materialDesign:HintAssist.Hint="絞り込み項目" Margin="16">
-                                                    <ComboBoxItem>
-                                                        番組タイトル
-                                                    </ComboBoxItem>
-                                                    <ComboBoxItem>
-                                                        番組サブタイトル
-                                                    </ComboBoxItem>
-                                                    <ComboBoxItem>
-                                                        シリーズ名
-                                                    </ComboBoxItem>
-                                                    <ComboBoxItem>
-                                                        放送局名
-                                                    </ComboBoxItem>
-                                                    <ComboBoxItem>
-                                                        ジャンル名
-                                                    </ComboBoxItem>
-                                                    <ComboBoxItem>
-                                                        日付
-                                                    </ComboBoxItem>
-                                                    <ComboBoxItem>
-                                                        録画開始時間
-                                                    </ComboBoxItem>
-                                                    <ComboBoxItem>
-                                                        録画終了時間
-                                                    </ComboBoxItem>
-                                                    <ComboBoxItem>
-                                                        録画時間
-                                                    </ComboBoxItem>
-                                                </ComboBox>
-                                                <TextBox x:Name="Search"  Margin="16" materialDesign:HintAssist.Hint="絞り込み内容"
-                                            Style="{StaticResource MaterialDesignFloatingHintTextBox}" TextWrapping="Wrap" VerticalContentAlignment="Stretch" Width="300"/>
-                                            </StackPanel>
-                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                                <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True" 
-                                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
-                                            CommandParameter="Sample2Cancel"
-                                            HorizontalAlignment="Center">キャンセル</Button>
-                                                <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True" 
-                                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
-                                            CommandParameter="Sample2Cancel"
-                                            HorizontalAlignment="Center">Let's 絞り込み</Button>
-                                            </StackPanel>
-                                        </StackPanel>
-                                    </Button.CommandParameter>
-                                </Button>
                             </StackPanel>
                         </materialDesign:PopupBox>
                         <Button Height="30" Width="30" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" Click="Button_Click_1">
                             <materialDesign:PackIcon Kind="Close" Height="25" Width="25"/>
                         </Button>
+                        <!--
+                        <TextBlock Text="TS Manager&#10;    v1.0.0" VerticalAlignment="Center" FontSize="16" Margin="0,0,5,0"/>
+                        -->
 
                     </StackPanel>
                     <TextBlock x:Name="TopText" Text="Homo (Home)" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" />
