@@ -36,10 +36,9 @@ namespace TSManager
         private void ListBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             var item = Listbox.SelectedItem;
-            if (item is Files)
+            if (item is Files file)
             {
-                var file = (Files)item;
-                Util.OpenFile(file.FilePath,file.FileName);
+                Util.OpenFile(file.FilePath, file.FileName);
             }
         }
     }

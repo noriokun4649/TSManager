@@ -21,20 +21,18 @@ namespace TSManager
         private void ListBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             var item = ListBox.SelectedItem;
-            if (item is Files)
+            if (item is Files file)
             {
-                var file = (Files)item;
-                Util.OpenFile(file.FilePath,file.FileName);
+                Util.OpenFile(file.FilePath, file.FileName);
             }
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var item = ListBox.SelectedItem;
-            if (item is Files)
+            if (item is Files file)
             {
-                var file = (Files)item;
-                var wasu = file.Epinum == 0 ? "なし" : "第"+file.Epinum.ToString()+"話";
+                var wasu = file.Epinum == 0 ? "なし" : "第" + file.Epinum.ToString() + "話";
                 var subtitle = file.TvSeriesInfo.LongCount() == 0 ? "なし" : file.TvSeriesInfo[0];
                 MessageBox.Show(
                 "ファイル名:" + file.FileName + "\n" +
