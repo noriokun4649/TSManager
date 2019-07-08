@@ -130,13 +130,13 @@
                                     </Button.CommandParameter>
                                 </Button>
                                 <Separator/>
-                                <Button Click="Button_Click">
+                                <Button Click="Button_Click_4">
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <materialDesign:PackIcon Kind="GithubCircle" VerticalAlignment="Center" Height="25" Width="25"/>
                                         <TextBlock VerticalAlignment="Center" Margin="10,0,0,0">オープンソース</TextBlock>
                                     </StackPanel>
                                 </Button>
-                                <Button Click="Button_Click">
+                                <Button Click="Button_Click_5">
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <materialDesign:PackIcon Kind="Information" VerticalAlignment="Center" Height="25" Width="25"/>
                                         <TextBlock VerticalAlignment="Center" Margin="10,0,0,0">バージョン情報</TextBlock>

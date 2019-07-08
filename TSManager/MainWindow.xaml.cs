@@ -276,5 +276,25 @@ namespace TSManager
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+
+            var setting = new OpenSource
+            {
+                Owner = this
+            };
+            setting.ShowDialog();
+        }
+
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+            var setting = new Version
+            {
+                Owner = this
+            };
+            setting.ShowDialog();
+
+        }
     }
 }
