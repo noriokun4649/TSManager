@@ -28,7 +28,11 @@ namespace TSManager
                 else
                 {
                     Listbox.ItemsSource = Util.Data;
-                }                
+                }
+            }
+            catch (InvalidOperationException)
+            {
+                MessageBox.Show("この日付のTSファイルを読み込み中のため正しく操作できません。読み込み完了後お試しください。");
             }
             catch (Exception ex)
             {
