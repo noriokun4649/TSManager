@@ -15,7 +15,6 @@ namespace TSManager
             TVTPlayBondriver.Text=Properties.Settings.Default.TVTPlayBondriver ;
             Com.Text = Properties.Settings.Default.Com;
             SaveFolder.Text = Properties.Settings.Default.SaveFolder;
-            FfmpegPath.Text = Properties.Settings.Default.FfmpegPath;
             mode.IsChecked =  Properties.Settings.Default.Mode;
             BlackList.Text = Properties.Settings.Default.BlackList;
         }
@@ -26,7 +25,6 @@ namespace TSManager
             Properties.Settings.Default.TVTPlayBondriver = TVTPlayBondriver.Text;
             Properties.Settings.Default.Com = Com.Text;
             Properties.Settings.Default.SaveFolder = SaveFolder.Text;
-            Properties.Settings.Default.FfmpegPath = FfmpegPath.Text;
             Properties.Settings.Default.Mode = (bool)mode.IsChecked;
             Properties.Settings.Default.BlackList = BlackList.Text;
             Properties.Settings.Default.Save();
@@ -51,18 +49,7 @@ namespace TSManager
                 this.TVTestPath.Text = dialog.FileName;
             }
         }
-        private void Button_Click_Ffmpeg_Open(object sender, RoutedEventArgs e)
-        {
-            var dialog = new CommonOpenFileDialog();
-            dialog.Filters.Add(new CommonFileDialogFilter("実行ファイル", "*.exe"));
-            dialog.Filters.Add(new CommonFileDialogFilter("すべてのファイル", "*.*"));
-            dialog.Title = "FFmpegのパスを取得する";
-            dialog.DefaultFileName = "ffmpeg.exe";
-            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
-            {
-                this.FfmpegPath.Text = dialog.FileName;
-            }
-        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
@@ -79,15 +66,6 @@ namespace TSManager
             {
                 this.SaveFolder.Text = dialog.FileName;
             }
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            var window = new ProSetting
-            {
-                Owner = this
-            };
-            window.ShowDialog();
         }
     }
 }
