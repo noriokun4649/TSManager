@@ -159,15 +159,7 @@ namespace TSManager
                         try
                         {
                             token.ThrowIfCancellationRequested();
-                            var bitmap = Util.ReadMovieInfoFfmpeg(str);//FFmpeg使うように。インターレース解除も
-                            if (bitmap == null)
-                            {
-                                Assembly myAssembly = Assembly.GetExecutingAssembly();
-                                bitmap = new Bitmap(myAssembly.GetManifestResourceStream("TSManager.icon.png"));
-                                warningCount++;
-                                Util.logger.Error($"[{str}]サムネイル画像の取得に失敗しました。");
-                            }
-                            var image = Util.Convert(bitmap);
+                            var image = Util.GetThumbnailForWindows(str);//FFmpeg使うように。インターレース解除も
                             image.Freeze();
                             var program = new ReadTxtFile(str + ".program.txt");
                             Util.Data.Add(new Files(program.Title, str, program.Series, program.Company, program.SeriesInfo,
@@ -227,7 +219,7 @@ namespace TSManager
                 }
                 catch (DirectoryNotFoundException)
                 {
-                    MessageBox.Show("設定で指定されている録画保存フォルダのパスが正しくないようです。設定しなおしてください。");
+                    MessageBox.Show("設定で指定されている録画保存フォルダのパスが正しくないようです。設定しなおしてください。\n");
                     Util.logger.Warn("設定で指定されている録画保存フォルダのパスが正しくないようです。設定しなおしてください。");
                 }
                 catch (UnauthorizedAccessException)

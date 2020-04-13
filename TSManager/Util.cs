@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.WindowsAPICodePack.Shell;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -43,65 +44,27 @@ namespace TSManager
             }
         }
 
-        public static BitmapSource Convert(Bitmap bitmap)
+        public static BitmapSource GetThumbnailForWindows(string inputMoviePath)
         {
-            var bitmapData = bitmap.LockBits(
-                new Rectangle(0, 0, bitmap.Width, bitmap.Height),
-                System.Drawing.Imaging.ImageLockMode.ReadOnly, bitmap.PixelFormat);
-
-            var bitmapSource = BitmapSource.Create(
-                bitmapData.Width, bitmapData.Height,
-                bitmap.HorizontalResolution, bitmap.VerticalResolution,
-                PixelFormats.Bgra32, null,
-                bitmapData.Scan0, bitmapData.Stride * bitmapData.Height, bitmapData.Stride);
-            //PixelFormats.Bgr32はOpenCVならPixelFormats.Bgr24つかう
-            bitmap.UnlockBits(bitmapData);
-            bitmap.Dispose();
-            bitmapSource.Freeze();
+            BitmapSource bitmapSource;
+            try
+            {
+                var shellFile = ShellFile.FromFilePath(inputMoviePath);
+                shellFile.Thumbnail.FormatOption = ShellThumbnailFormatOption.ThumbnailOnly;
+                bitmapSource = shellFile.Thumbnail.ExtraLargeBitmapSource;
+            }
+            catch (Exception ex)
+            {
+                Util.logger.Error($"[{inputMoviePath}]サムネイル画像の取得に失敗しました。");
+                var shellFile = ShellFile.FromFilePath(inputMoviePath);
+                shellFile.Thumbnail.FormatOption = ShellThumbnailFormatOption.IconOnly;
+                bitmapSource = shellFile.Thumbnail.ExtraLargeBitmapSource;
+                Console.WriteLine(ex.StackTrace);
+            }
             return bitmapSource;
         }
-        /// <summary>動画ファイルからパイプを用いて画像を抽出する</summary>
-        public static Bitmap ReadMovieInfoFfmpeg(string inputMoviePath)//680:383
-        {
-            //var arguments = $"-ss 10 -i \"{inputMoviePath}\" -filter_complex \"dejudder,fps=30000/1001,fieldmatch,yadif=0:-1:1,decimate,fps=24000/1001,scale=680:383\" -vframes 1  -f image2 pipe:1";
-            var arguments = $"-ss {Settings.Default.FfmpegSec.ToString()} -i \"{inputMoviePath}\" {Settings.Default.FfmpegPara.ToString()} -f image2 pipe:1";
-            //ここでFFmpeg利用。逆テレシネでFPSによるブレと、インターレースによる横線を取り除いてサムネイルを取得。680　383
-            using (var process = new Process())
-            {
-                try
-                {
-                    process.StartInfo = new ProcessStartInfo
-                    {
-                        FileName = Settings.Default.FfmpegPath,
-                        Arguments = arguments,
-                        CreateNoWindow = true,
-                        UseShellExecute = false,
-                        RedirectStandardOutput = true,
-                    };
-                    process.Start();
-                    var id = process.Id;
-                    var task = Task.Factory.StartNew(() => {
-                        var pr = Process.GetProcessById(id);
-                        Thread.Sleep(Properties.Settings.Default.FFmpegWaitSec);
-                        pr.Kill();
 
-                        logger.Info($"指定した時間内に応答しなかったためプロセスを強制終了しました。{id.ToString()}");
-                    });
-                    var image = Image.FromStream(process.StandardOutput.BaseStream);
-                    return new Bitmap(image);
-                }
-                catch (InvalidOperationException)
-                {
-                    logger.Warn($"[{inputMoviePath}]FFMpegが見つからないため処理できません。:");
-                    return null;
-                }
-                catch (Exception ex)
-                {
-                    logger.Warn($"[{inputMoviePath}]スクランブル解除されていないか。TSファイルを正常に読み取れませんでした。 {ex.Message}");
-                    return null;
-                }
-            }
-        }
+
         public static string GetCurrentAppDir()
         {
             return Path.GetDirectoryName(
