@@ -13,7 +13,7 @@ namespace TSManager
         public UserControlProgram()
         {
             InitializeComponent();
-            program = Util.Data.Select(files => files.TvSeries).Distinct();
+            program = Util.Data.OrderBy(order => order.TvSeries).Select(files => files.TvSeries).Distinct();
             Mode.ItemsSource = program;
             Listbox.ItemsSource = Util.Data.Where(files => files.TvSeries.Equals(program.ElementAt(0))).OrderBy(data => data.TvSeries).ThenBy(data => data.Epinum);
         }
