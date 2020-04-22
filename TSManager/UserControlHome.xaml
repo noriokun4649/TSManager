@@ -11,8 +11,7 @@
             Padding="10"
             Background="Transparent"
             MouseDoubleClick="ListBox_MouseDoubleClick"
-            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-            SelectionChanged="ListBox_SelectionChanged"  >
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled">
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
                 <WrapPanel  Margin="5"  Orientation="Horizontal" IsItemsHost="True"/>
