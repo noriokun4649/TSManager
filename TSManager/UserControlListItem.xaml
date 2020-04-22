@@ -23,8 +23,8 @@
             <TextBlock Text="{Binding TvSeriesInfo[0]}" Margin="10" TextWrapping="Wrap" Foreground="#FF707070" />
             <TextBlock Text="{Binding Company}" Margin="10" TextWrapping="Wrap" Foreground="#FF707070" />
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
-                <Button Content="再生" Margin="10,0"/>
-                <Button Content="情報" Margin="10,0"/>
+                <Button Content="再生" Margin="10,0" Click="Button_Click"/>
+                <Button Content="情報" Margin="10,0" Click="Button_Click_1"/>
             </StackPanel>
         </StackPanel>
     </Grid>
