@@ -5,13 +5,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Reflection;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using TSManager.Properties;
 
@@ -44,7 +40,7 @@ namespace TSManager
             }
         }
 
-        public static BitmapSource GetThumbnailForWindows(string inputMoviePath)
+        public static BitmapSource GetThumbnailForWindows(string inputMoviePath, LoadCounter loadCounter)
         {
             BitmapSource bitmapSource;
             try
@@ -55,10 +51,11 @@ namespace TSManager
             }
             catch (Exception ex)
             {
-                Util.logger.Error($"[{inputMoviePath}]サムネイル画像の取得に失敗しました。");
+                logger.Warn($"[{inputMoviePath}]サムネイル画像の取得に失敗しました。");
                 var shellFile = ShellFile.FromFilePath(inputMoviePath);
                 shellFile.Thumbnail.FormatOption = ShellThumbnailFormatOption.IconOnly;
                 bitmapSource = shellFile.Thumbnail.ExtraLargeBitmapSource;
+                loadCounter.WarningCount++;
                 Console.WriteLine(ex.StackTrace);
             }
             return bitmapSource;

@@ -146,7 +146,7 @@ namespace TSManager
                         {
                             token.ThrowIfCancellationRequested();
                             var program = new ReadTxtFile(str + ".program.txt");
-                            var image = Util.GetThumbnailForWindows(str);//Windows標準のサムネイル取得
+                            var image = Util.GetThumbnailForWindows(str, loadCounter);//Windows標準のサムネイル取得
                             image.Freeze();
                             Util.Data.Add(new Files(program.Title, str, program.Series, program.Company, program.SeriesInfo,
                                 program.GenreIndex, program.Genre, program.Length, program.Starttime, program.Endtime, DateTime.Now, image, program.Epinum));
