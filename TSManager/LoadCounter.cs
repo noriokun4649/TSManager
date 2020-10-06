@@ -5,14 +5,14 @@ namespace TSManager
 {
     public class LoadCounter
     {
+        private readonly ProgressBar bar1;
+        private readonly ProgressBar bar2;
+        private readonly TextBlock text;
+        private readonly Label label;
         private readonly int totalCount;
         private int nowCount;
         private int errorCount;
         private int warningCount;
-        private ProgressBar bar1;
-        private ProgressBar bar2;
-        private TextBlock text;
-        private Label label;
 
 
         public LoadCounter(ProgressBar bar1,ProgressBar bar2,TextBlock text,Label label,int max)
