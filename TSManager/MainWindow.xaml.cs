@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Security;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -141,68 +139,54 @@ namespace TSManager
                         }
                         return true;
                     });
-                    var totalCount = files.Count();
-                    var nowCount = 0;
-                    var errorCount = 0;
-                    var warningCount = 0;
-                    Dispatcher.Invoke(() =>
-                    {
-                        progressDiag.Maximum = totalCount;
-                        progress.Maximum = totalCount;
-                        progressDiag.Value = nowCount;
-                        progress.Value = nowCount;
-                        now.Text = totalCount + "件中" + (nowCount + errorCount) + "件完了(エラー" + errorCount + "件/注意"+ warningCount +"件)";
-                        loadingText.Content = "TSファイル読み込み状況\n" + totalCount + "件中" + (nowCount+ errorCount) + "件完了\n(エラー" + errorCount + "件/注意" + warningCount + "件)";
-                    });
+                    LoadCounter loadCounter = new LoadCounter(progressDiag,progress,now,loadingText,files.Count());
                     foreach (string str in files)
                     {
                         try
                         {
                             token.ThrowIfCancellationRequested();
-                            var image = Util.GetThumbnailForWindows(str);//FFmpeg使うように。インターレース解除も
-                            image.Freeze();
                             var program = new ReadTxtFile(str + ".program.txt");
+                            var image = Util.GetThumbnailForWindows(str);//Windows標準のサムネイル取得
+                            image.Freeze();
                             Util.Data.Add(new Files(program.Title, str, program.Series, program.Company, program.SeriesInfo,
                                 program.GenreIndex, program.Genre, program.Length, program.Starttime, program.Endtime, DateTime.Now, image, program.Epinum));
-                            nowCount++;
+                            loadCounter.NowCount++;
                         }
                         catch (IndexOutOfRangeException)
                         {
-                            errorCount++;
+                            loadCounter.ErrorCount++;
                             Util.logger.Error($"[{str}.program.txt]EDCB録画結果ファイルのパースに失敗しました。");
                         }
                         catch (FormatException)
                         {
-                            errorCount++;
+                            loadCounter.ErrorCount++;
                             Util.logger.Error($"[{str}.program.txt]EDCB録画結果ファイルのパースに失敗しました。");
                         }
                         catch (FileNotFoundException)
                         {
-                            errorCount++;
+                            loadCounter.ErrorCount++;
                             Util.logger.Error($"[{str}.program.txt]EDCB録画結果ファイルが見つかりませんでした。EDCBにて録画時に番組情報を保存するようにしてあるか確認してください。");
                         }
                         catch (IOException ex)
                         {
-                            errorCount++;
+                            loadCounter.ErrorCount++;
                             Util.logger.Error($"[{str}]ファイルを開く際にIOエラーが発生しました。 IOエラー詳細：{ex.Message}");
                         }
                         catch (NullReferenceException)
                         {
-                            errorCount++;
+                            loadCounter.ErrorCount++;
                             Util.logger.Error($"[{str}]やべぇーヌルッてしまった。。。ということで解析不能なTSファイルがありました。");
+                        }
+                        catch (InvalidOperationException)
+                        {
+                            loadCounter.ErrorCount++;
+                            Util.logger.Warn($"[{str}]サムネイルが取得出来なかったためTSアイコンに差し替えました。");
                         }
                         catch (AggregateException)
                         {
-                            errorCount++;
+                            loadCounter.ErrorCount++;
                             Util.logger.Error($"[{str}]TSファイル内から番組情報を取得しようとしましたが見つかりませんでした。");
                         }
-                        Dispatcher.Invoke(() =>
-                        {
-                            progressDiag.Value = nowCount + errorCount;
-                            progress.Value = nowCount + errorCount;
-                            now.Text = totalCount + "件中" + (nowCount + errorCount) + "件完了(エラー" + errorCount + "件/注意" + warningCount + "件)";
-                            loadingText.Content = "TSファイル読み込み状況\n" + totalCount + "件中" + (nowCount + errorCount) + "件完了\n(エラー" + errorCount + "件/注意" + warningCount + "件)";
-                        });
                     }
                 }
                 catch (OperationCanceledException)
