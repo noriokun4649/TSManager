@@ -10,7 +10,7 @@ namespace TSManager
     class ReadTxtFile
     {
         const string flag = @"\[新\]|\[終\]|\[再\]|\[字\]|\[デ\]|\[解\]|\[無\]|\[二\]|\[S\]|\[SS\]|\[初\]|\[生\]|\[Ｎ\]|\[映\]|\[多\]|\[双\]";
-        const string subtitleflag = @"「.+」|【.+】";
+        const string subtitleflag = @"「.+」|【.+】|▽.+";
         const string tvIndex = @"[#＃♯](?<index>[0-9０-９]{1,3})|[第](?<index>[0-9０-９]{1,3})[話回]";
 
         public ReadTxtFile(string filepath)
@@ -71,6 +71,9 @@ namespace TSManager
                     if (Series.Split('　').Length > 1)
                     {
                         Series = Series.Split('　')[0];
+                    }else if (Series.Split(' ').Length > 1)
+                    {
+                        Series = Series.Split(' ')[0];
                     }
                     var matche = Regex.Matches(Title, subtitleflag);
                     foreach (Match ma in matche)
